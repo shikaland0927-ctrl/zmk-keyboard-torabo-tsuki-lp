@@ -4,10 +4,16 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+&zip_temp_layer {
+    require-prior-idle-ms = <200>;
+    excluded-positions = <33 34 35>;
+};
+
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+        <&zip_temp_layer 4 0>;
 
     scroll {
         layers = <6>;
@@ -35,6 +41,10 @@
             <&zip_split_shortcuts>,
             <&zip_xy_scaler 0 1>;
     };
+};
+
+&mkp_input_listener {
+    input-processors = <&zip_temp_layer 4 300>;
 };
 
 &lt {
