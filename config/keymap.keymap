@@ -38,6 +38,11 @@
             bindings = <&kp LC(LG(Q))>;
             key-positions = <53 54>;
         };
+
+        xn {
+            bindings = <&xn_macro>;
+            key-positions = <34 35>;
+        };
     };
 
     behaviors {
@@ -165,6 +170,13 @@
                 <&mo 8 &mkp MB1>;
 
             label = "LEFT_CLICK_MACRO";
+        };
+
+        xn_macro: xn_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp X &kp N>;
+            label = "XN_MACRO";
         };
     };
 
