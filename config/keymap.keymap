@@ -1,6 +1,41 @@
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+
+&pointing_listener {
+    input-processors =
+        <&zip_xy_scaler 2 3>,
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+
+    scroll {
+        layers = <6>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_scaler 1 16>;
+    };
+
+    gesture_shortcuts {
+        layers = <5>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_gesture_shortcuts>,
+            <&zip_xy_scaler 0 1>;
+    };
+
+    window_shortcuts {
+        layers = <7>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_window_shortcuts>,
+            <&zip_xy_scaler 0 1>;
+    };
+};
 
 &lt {
     tapping-term-ms = <150>;
@@ -16,6 +51,42 @@
 };
 
 / {
+    zip_gesture_shortcuts: zip_gesture_shortcuts {
+        compatible = "zmk,input-processor-keybind";
+        #input-processor-cells = <0>;
+        mode = <1>;
+        bindings =
+            <&kp LG(LC(F))>,
+            <&kp LA(LC(LEFT_ARROW))>,
+            <&kp LA(LC(UP_ARROW))>,
+            <&kp LA(LC(DOWN_ARROW))>;
+
+        tick = <120>;
+        threshold = <4>;
+        max_threshold = <200>;
+        max_pending_activations = <1>;
+        wait-ms = <0>;
+        tap-ms = <10>;
+    };
+
+    zip_window_shortcuts: zip_window_shortcuts {
+        compatible = "zmk,input-processor-keybind";
+        #input-processor-cells = <0>;
+        mode = <1>;
+        bindings =
+            <&kp LG(LC(RIGHT_ARROW))>,
+            <&kp LG(LC(LEFT_ARROW))>,
+            <&kp LG(LC(UP_ARROW))>,
+            <&kp LG(LC(DOWN_ARROW))>;
+
+        tick = <120>;
+        threshold = <4>;
+        max_threshold = <200>;
+        max_pending_activations = <1>;
+        wait-ms = <0>;
+        tap-ms = <10>;
+    };
+
     combos {
         compatible = "zmk,combos";
 
