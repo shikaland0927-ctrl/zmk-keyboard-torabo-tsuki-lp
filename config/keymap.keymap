@@ -1,6 +1,48 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <input/processors.dtsi>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/keys.h>
+
+&zip_temp_layer {
+    excluded-positions = <33 34 35>;
+};
+
+&pointing_listener {
+    input-processors =
+        <&zip_xy_scaler 2 3>,
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+        <&zip_temp_layer 4 10000>;
+
+    scroll {
+        layers = <6>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_scaler 1 16>;
+    };
+
+    gesture_shortcuts {
+        layers = <5>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_gesture_shortcuts>,
+            <&zip_xy_scaler 0 1>;
+    };
+
+    window_shortcuts {
+        layers = <7>;
+        input-processors =
+            <&zip_xy_scaler 2 3>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_window_shortcuts>,
+            <&zip_xy_scaler 0 1>;
+    };
+};
+
+&mkp_input_listener { input-processors = <&zip_temp_layer 4 10000>; };
 
 &lt {
     tapping-term-ms = <150>;
