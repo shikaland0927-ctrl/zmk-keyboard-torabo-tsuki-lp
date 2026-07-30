@@ -331,11 +331,11 @@
 
         NAV {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans                       &trans                           &trans                            &trans                        &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans                       &trans                           &trans                            &trans                        &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans          &trans
             >;
         };
 
