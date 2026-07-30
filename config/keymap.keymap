@@ -115,6 +115,16 @@
             tapping-term-ms = <150>;
             hold-while-undecided;
         };
+
+        mt_in_aml: mt_in_aml {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MT_IN_AML";
+            bindings = <&kp_to_dl>, <&mkp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            hold-while-undecided;
+        };
     };
 
     macros {
@@ -225,11 +235,11 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
             >;
         };
 
