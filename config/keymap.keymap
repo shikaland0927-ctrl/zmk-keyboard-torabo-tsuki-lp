@@ -27,12 +27,12 @@
             <&zip_xy_scaler 0 1>;
     };
 
-    window_shortcuts {
+    split_shortcuts {
         layers = <7>;
         input-processors =
             <&zip_xy_scaler 2 3>,
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-            <&zip_window_shortcuts>,
+            <&zip_split_shortcuts>,
             <&zip_xy_scaler 0 1>;
     };
 };
@@ -69,7 +69,7 @@
         tap-ms = <10>;
     };
 
-    zip_window_shortcuts: zip_window_shortcuts {
+    zip_split_shortcuts: zip_split_shortcuts {
         compatible = "zmk,input-processor-keybind";
         #input-processor-cells = <0>;
         mode = <1>;
