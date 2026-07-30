@@ -275,11 +275,11 @@
 
         MCD {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans     &trans     &trans         &trans                                &trans             &trans     &trans     &trans     &trans     &trans
+&trans  &kp RG(Q)  &kp RG(L)  &kp RG(U)  &kp RG(COMMA)  &kp RG(DOT)                           &kp RG(F)          &kp RG(W)  &kp RG(R)  &kp RG(Y)  &kp RG(P)  &trans
+&trans  &kp E      &kp I      &kp A      &kp O          &kp SEMI       &trans  &trans         &kp K              &trans     &kp N      &kp S      &kp H      &trans
+&trans  &kp E      &kp I      &kp A      &kp O          &kp SEMI       &trans  &trans         &kp G              &kp D      &kp M      &kp Z      &kp B      &trans
+&trans  &trans     &trans     &trans     &trans         &kp RG(ENTER)  &trans  &kp RG(SPACE)  &kp RG(BACKSPACE)  &trans     &trans     &trans     &trans     &trans
             >;
         };
     };
