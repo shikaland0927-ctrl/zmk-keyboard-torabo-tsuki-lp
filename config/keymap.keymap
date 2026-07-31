@@ -16,7 +16,7 @@
         <&zip_temp_layer 4 0>;
 
     scroll {
-        layers = <6>;
+        layers = <7>;
         input-processors =
             <&zip_xy_scaler 2 3>,
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
@@ -25,7 +25,7 @@
     };
 
     gesture_shortcuts {
-        layers = <5>;
+        layers = <6>;
         input-processors =
             <&zip_xy_scaler 2 3>,
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
@@ -34,7 +34,7 @@
     };
 
     split_shortcuts {
-        layers = <7>;
+        layers = <8>;
         input-processors =
             <&zip_xy_scaler 2 3>,
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
