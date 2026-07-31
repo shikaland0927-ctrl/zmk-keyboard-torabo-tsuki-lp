@@ -290,10 +290,10 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_press>,
-                <&mo 9 &mkp MB1>,
+                <&mo 8 &mkp MB1>,
                 <&macro_pause_for_release>,
                 <&macro_release>,
-                <&mo 9 &mkp MB1>;
+                <&mo 8 &mkp MB1>;
 
             label = "LEFT_CLICK_MACRO";
         };
@@ -312,7 +312,7 @@
         DEFAULT {
             bindings = <
 &trans  &trans                         &trans                 &trans               &trans             &trans                                            &trans           &trans             &trans                &trans                  &trans                          &trans
-&trans  &kp Q                          &kp L                  &kp U                &kp COMMA          &kp DOT                                           &kp F            &lt_to_torabo 6 W  &lt_to_torabo 7 R     &lt_to_torabo 8 Y       &kp P                           &trans
+&trans  &kp Q                          &kp L                  &kp U                &kp COMMA          &kp DOT                                           &kp F            &lt_to_torabo 5 W  &lt_to_torabo 6 R     &lt_to_torabo 7 Y       &kp P                           &trans
 &trans  &hrm_l LEFT_ALT E              &hrm_l LEFT_CONTROL I  &hrm_l LEFT_SHIFT A  &hrm_l LEFT_GUI O  &kp SEMI     &trans        &trans                 &kp K            &hrm_r RGUI T      &hrm_r RIGHT_SHIFT N  &hrm_r RIGHT_CONTROL S  &hrm_r RIGHT_ALT H              &trans
 &trans  &hrm_l LC(LA(LS(LEFT_GUI))) X  &kp J                  &kp C                &kp V              &kp COLON    &kp CAPSLOCK  &kp LG(LA(LC(LS(R))))  &kp G            &kp D              &kp M                 &kp Z                   &hrm_r RC(RA(RS(RIGHT_GUI))) B  &trans
 &trans  &kp C_BRIGHTNESS_DEC           &kp C_BRIGHTNESS_INC   &kp RC(RA(E))        &kp TAB            &lt 3 ENTER  &kp ESCAPE    &lt_to_nav 0 SPACE     &lt 1 BACKSPACE  &trans             &trans                &kp C_VOLUME_DOWN       &kp C_VOL_UP                    &trans
@@ -353,19 +353,9 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &mo 5   &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
-            >;
-        };
-
-        CLICK {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans    &trans    &trans    &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans    &trans    &trans    &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans  &trans
             >;
         };
 
