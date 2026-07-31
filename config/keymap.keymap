@@ -351,11 +351,11 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &kp LC(UP_ARROW)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
             >;
         };
 
