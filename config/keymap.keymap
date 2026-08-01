@@ -13,7 +13,7 @@
     input-processors =
         <&zip_xy_scaler 2 3>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_temp_layer 4 500>;
+        <&zip_temp_layer 4 10000>;
 
     scroll {
         layers = <6>;
