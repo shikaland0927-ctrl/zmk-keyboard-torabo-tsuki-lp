@@ -304,27 +304,6 @@
             bindings = <&kp X &kp N>;
             label = "XN_MACRO";
         };
-
-        icloud: icloud {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp S &kp H &kp I &kp K &kp A &kp L &kp A &kp N &kp D &kp N0 &kp N9 &kp N2 &kp N7 &kp AT &kp I &kp C &kp L &kp O &kp U &kp D &kp DOT &kp C &kp O &kp M>;
-            label = "ICLOUD";
-        };
-
-        eccs: eccs {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp S &kp H &kp I &kp K &kp A &kp L &kp A &kp N &kp D &kp N0 &kp N9 &kp N2 &kp N7 &kp AT &kp G &kp DOT &kp E &kp C &kp C &kp DOT &kp U &kp MINUS &kp T &kp O &kp K &kp Y &kp O &kp DOT &kp A &kp C &kp DOT &kp J &kp P>;
-            label = "ECCS";
-        };
-
-        tel: tel {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp N0 &kp N9 &kp N0 &kp N6 &kp N2 &kp N1 &kp N2 &kp N9 &kp N8 &kp N0 &kp N2>;
-            label = "TEL";
-        };
     };
 
     keymap {
@@ -352,11 +331,11 @@
 
         NAV {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                   &trans                       &trans                           &trans                            &trans                        &trans          &trans
-&trans  &trans  &trans  &trans  &trans  &trans                   &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &trans          &trans
-&trans  &trans  &trans  &trans  &trans  &trans   &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END  &trans
-&trans  &trans  &trans  &trans  &trans  &trans   &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &trans          &trans
-&trans  &trans  &trans  &trans  &tel    &icloud  &eccs   &trans  &trans                       &trans                           &trans                            &trans                        &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans                       &trans                           &trans                            &trans                        &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans          &trans
             >;
         };
 
