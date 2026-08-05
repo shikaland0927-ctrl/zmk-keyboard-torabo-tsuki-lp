@@ -50,7 +50,6 @@
     quick-tap-ms = <200>;
     flavor = "hold-preferred";
     hold-while-undecided;
-    retro-tap;
 };
 
 &mt {
