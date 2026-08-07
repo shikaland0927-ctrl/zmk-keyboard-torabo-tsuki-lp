@@ -1,0 +1,32 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Input processor for enabling a temporary layer after a movement threshold is reached
+
+compatible: "zmk,input-processor-threshold-temp-layer"
+
+include: ip_two_param.yaml
+
+properties:
+  activation-threshold:
+    type: int
+    required: true
+    description: Cumulative absolute X/Y movement required to activate the layer
+
+  accumulation-window-ms:
+    type: int
+    required: false
+    default: 100
+    description: Time window in milliseconds used to accumulate X/Y movement
+
+  require-prior-idle-ms:
+    type: int
+    required: false
+    default: 0
+    description: Time in milliseconds that must pass after the last keystroke before activation
+
+  excluded-positions:
+    type: array
+    required: false
+    default: []
+    description: Key positions that do not deactivate the layer when pressed

@@ -4,8 +4,12 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+#define AML_ACTIVATION_THRESHOLD 8
+#define AML_ACCUMULATION_WINDOW_MS 100
+#define AML_REQUIRE_PRIOR_IDLE_MS 300
+
 &zip_temp_layer {
-    require-prior-idle-ms = <300>;
+    require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
     excluded-positions = <33 34 35 36>;
 };
 
@@ -13,7 +17,7 @@
     input-processors =
         <&zip_xy_scaler 2 3>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_temp_layer 4 10000>;
+        <&zip_threshold_temp_layer 4 10000>;
 
     scroll {
         layers = <6>;
@@ -58,6 +62,15 @@
 };
 
 / {
+    zip_threshold_temp_layer: zip_threshold_temp_layer {
+        compatible = "zmk,input-processor-threshold-temp-layer";
+        #input-processor-cells = <2>;
+        activation-threshold = <AML_ACTIVATION_THRESHOLD>;
+        accumulation-window-ms = <AML_ACCUMULATION_WINDOW_MS>;
+        require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
+        excluded-positions = <33 34 35 36>;
+    };
+
     zip_gesture_shortcuts: zip_gesture_shortcuts {
         compatible = "zmk,input-processor-keybind";
         #input-processor-cells = <0>;
