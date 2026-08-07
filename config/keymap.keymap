@@ -385,7 +385,7 @@
             >;
         };
 
-        MCD {
+        CMD {
             bindings = <
 &trans  &trans     &trans     &trans     &trans         &trans                                &trans             &trans     &trans     &trans     &trans     &trans
 &trans  &kp RG(Q)  &kp RG(L)  &kp RG(U)  &kp RG(COMMA)  &kp RG(DOT)                           &kp RG(F)          &kp RG(W)  &kp RG(R)  &kp RG(Y)  &kp RG(P)  &trans
