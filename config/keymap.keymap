@@ -10,7 +10,7 @@
 
 &zip_temp_layer {
     require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
-    excluded-positions = <33 34 35>;
+    excluded-positions = <33 34 35 36>;
 };
 
 &pointing_listener {
