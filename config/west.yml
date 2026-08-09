@@ -4,8 +4,6 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
-    - name: te9no
-      url-base: https://github.com/te9no
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -29,8 +27,5 @@ manifest:
     - name: zmk-feature-non-lipo-battery-management
       remote: sekigon-gonnoc
       revision: main
-    - name: zmk-input-processor-keybind
-      remote: te9no
-      revision: a2ea625ac8f56263be7644700e0808496d10c853
   self:
     path: config
