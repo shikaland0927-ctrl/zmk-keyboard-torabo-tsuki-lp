@@ -82,8 +82,8 @@
         };
 
         mission_control {
-            bindings = <&mt_to_dl RC(RIGHT_SHIFT) LC(UP_ARROW)>;
-            key-positions = <35 34>;
+            bindings = <&mt_to_dl LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
+            key-positions = <33 34 35>;
         };
     };
 
@@ -311,11 +311,11 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &kp LC(UP_ARROW)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
             >;
         };
 
