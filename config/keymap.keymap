@@ -134,6 +134,11 @@
             bindings = <&xn_macro>;
             key-positions = <34 35>;
         };
+
+        mission_control {
+            bindings = <&mt_to_dl RC(RIGHT_SHIFT) LC(UP_ARROW)>;
+            key-positions = <35 34>;
+        };
     };
 
     behaviors {
@@ -320,11 +325,11 @@
 
         DEFAULT {
             bindings = <
-&trans  &trans                         &trans                 &trans               &trans             &trans                                            &trans           &trans             &trans                &trans                  &trans                          &trans
-&trans  &kp Q                          &kp L                  &kp U                &kp COMMA          &kp DOT                                           &kp F            &lt_to_torabo 5 W  &lt_to_torabo 6 R     &kp Y                   &kp P                           &trans
-&trans  &hrm_l LEFT_ALT E              &hrm_l LEFT_CONTROL I  &hrm_l LEFT_SHIFT A  &hrm_l LEFT_GUI O  &kp SEMI     &trans        &trans                 &kp K            &hrm_r RGUI T      &hrm_r RIGHT_SHIFT N  &hrm_r RIGHT_CONTROL S  &hrm_r RIGHT_ALT H              &trans
-&trans  &hrm_l LC(LA(LS(LEFT_GUI))) X  &kp J                  &kp C                &kp V              &kp COLON    &kp CAPSLOCK  &kp LG(LA(LC(LS(R))))  &kp G            &kp D              &kp M                 &kp Z                   &hrm_r RC(RA(RS(RIGHT_GUI))) B  &trans
-&trans  &kp C_BRIGHTNESS_DEC           &kp C_BRIGHTNESS_INC   &kp RC(RA(E))        &kp TAB            &lt 3 ENTER  &kp ESCAPE    &lt_to_nav 0 SPACE     &lt 1 BACKSPACE  &trans             &trans                &kp C_VOLUME_DOWN       &kp C_VOL_UP                    &trans
+&trans  &trans                         &trans                 &trans               &trans             &trans                                            &trans           &trans         &trans                &trans                  &trans                          &trans
+&trans  &kp Q                          &kp L                  &kp U                &kp COMMA          &kp DOT                                           &kp F            &kp_to_dl W    &lt_to_torabo 6 R     &kp Y                   &kp P                           &trans
+&trans  &hrm_l LEFT_ALT E              &hrm_l LEFT_CONTROL I  &hrm_l LEFT_SHIFT A  &hrm_l LEFT_GUI O  &kp SEMI     &trans        &trans                 &kp K            &hrm_r RGUI T  &hrm_r RIGHT_SHIFT N  &hrm_r RIGHT_CONTROL S  &hrm_r RIGHT_ALT H              &trans
+&trans  &hrm_l LC(LA(LS(LEFT_GUI))) X  &kp J                  &kp C                &kp V              &kp COLON    &kp CAPSLOCK  &kp LG(LA(LC(LS(R))))  &kp G            &kp D          &kp M                 &kp Z                   &hrm_r RC(RA(RS(RIGHT_GUI))) B  &trans
+&trans  &kp C_BRIGHTNESS_DEC           &kp C_BRIGHTNESS_INC   &kp RC(RA(E))        &kp TAB            &lt 3 ENTER  &kp ESCAPE    &lt_to_nav 0 SPACE     &lt 1 BACKSPACE  &trans         &trans                &kp C_VOLUME_DOWN       &kp C_VOL_UP                    &trans
             >;
         };
 
@@ -360,11 +365,11 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &kp LC(UP_ARROW)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans            &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &lclick  &mt_in_aml RIGHT_SHIFT MB3  &mt_in_aml RIGHT_CONTROL MB2  &mo 4   &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans                      &trans                        &trans  &trans
             >;
         };
 
