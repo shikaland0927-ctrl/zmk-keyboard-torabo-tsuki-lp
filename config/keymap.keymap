@@ -78,7 +78,7 @@
         bindings =
             <&kp LG(LC(F))>,
             <&kp LA(LC(LEFT_ARROW))>,
-            <&kp LA(LC(UP_ARROW))>,
+            <&kp LC(UP_ARROW)>,
             <&kp LA(LC(DOWN_ARROW))>;
 
         tick = <120>;
