@@ -78,7 +78,7 @@
 
         xn {
             bindings = <&xn_macro>;
-            key-positions = <34 48>;
+            key-positions = <34 20>;
         };
 
         mission_control {
@@ -88,7 +88,7 @@
 
         caps_lock {
             bindings = <&kp CAPSLOCK>;
-            key-positions = <27 41>;
+            key-positions = <27 15>;
         };
     };
 
