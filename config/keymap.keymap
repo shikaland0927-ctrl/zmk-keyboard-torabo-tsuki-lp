@@ -66,6 +66,18 @@
             key-positions = <28 27>;
         };
 
+        xn {
+            bindings = <&xn_macro>;
+            key-positions = <34 35>;
+            timeout-ms = <20>;
+        };
+
+        caps_lock {
+            bindings = <&kp CAPSLOCK>;
+            key-positions = <27 26>;
+            timeout-ms = <20>;
+        };
+
         mute {
             bindings = <&kp K_MUTE>;
             key-positions = <63 64>;
@@ -76,19 +88,9 @@
             key-positions = <53 54>;
         };
 
-        xn {
-            bindings = <&xn_macro>;
-            key-positions = <34 35>;
-        };
-
         mission_control {
             bindings = <&mt_to_dl LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
             key-positions = <33 34 35>;
-        };
-
-        caps_lock {
-            bindings = <&kp CAPSLOCK>;
-            key-positions = <27 26>;
         };
     };
 
