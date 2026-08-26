@@ -69,13 +69,13 @@
         xn {
             bindings = <&xn_macro>;
             key-positions = <34 35>;
-            timeout-ms = <20>;
+            timeout-ms = <30>;
         };
 
         caps_lock {
             bindings = <&kp CAPSLOCK>;
             key-positions = <27 26>;
-            timeout-ms = <20>;
+            timeout-ms = <30>;
         };
 
         mute {
