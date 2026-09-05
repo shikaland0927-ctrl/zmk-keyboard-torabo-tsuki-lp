@@ -72,7 +72,7 @@
             timeout-ms = <30>;
         };
 
-        caps_lock {
+        minus {
             bindings = <&kp MINUS>;
             key-positions = <27 26>;
             timeout-ms = <30>;
