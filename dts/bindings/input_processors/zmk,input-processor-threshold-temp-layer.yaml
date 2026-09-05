@@ -1,7 +1,11 @@
 # Copyright (c) 2024 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-description: Input processor for enabling a temporary layer after a movement threshold is reached
+description: >
+  Input processor for enabling a temporary layer after a movement threshold is reached.
+  Share one instance between the pointing and mouse-button listeners to use one timeout.
+  Movement and mouse-button events refresh the active layer's timeout. Held mouse buttons
+  suspend expiry until the last button is released. Only X/Y movement can activate the layer.
 
 compatible: "zmk,input-processor-threshold-temp-layer"
 

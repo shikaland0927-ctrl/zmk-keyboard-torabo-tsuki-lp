@@ -6,6 +6,7 @@
 #define DT_DRV_COMPAT zmk_input_processor_threshold_temp_layer
 
 #include <zephyr/device.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <zephyr/input/input.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
@@ -36,8 +37,10 @@ struct threshold_temp_layer_state {
     bool is_active;
     bool activation_pending;
     bool is_accumulating;
+    uint8_t pressed_buttons;
     int64_t last_tapped_timestamp;
     int64_t accumulation_started_at;
+    int64_t expires_at;
     uint32_t accumulated_movement;
 };
 
@@ -85,6 +88,22 @@ static bool is_xy_movement(const struct input_event *event) {
            (event->code == INPUT_REL_X || event->code == INPUT_REL_Y) && event->value != 0;
 }
 
+static bool is_mouse_button(const struct input_event *event) {
+    return event->type == INPUT_EV_KEY && event->code >= INPUT_BTN_0 &&
+           event->code <= INPUT_BTN_4;
+}
+
+static void refresh_timeout(struct threshold_temp_layer_state *state, uint32_t timeout_ms,
+                            int64_t current_time) {
+    state->expires_at = timeout_ms > 0 ? current_time + timeout_ms : 0;
+
+    if (state->pressed_buttons || timeout_ms == 0) {
+        k_work_cancel_delayable(&layer_disable_works[state->toggle_layer]);
+    } else {
+        k_work_reschedule(&layer_disable_works[state->toggle_layer], K_MSEC(timeout_ms));
+    }
+}
+
 static uint32_t movement_magnitude(const struct input_event *event) {
     int64_t value = event->value;
 
@@ -115,13 +134,18 @@ static bool accumulate_movement(const struct threshold_temp_layer_config *config
 
 static void update_layer_state(struct threshold_temp_layer_state *state, bool activate) {
     state->activation_pending = false;
+    reset_accumulation(state);
+
+    if (!activate) {
+        state->expires_at = 0;
+        k_work_cancel_delayable(&layer_disable_works[state->toggle_layer]);
+    }
 
     if (state->is_active == activate) {
         return;
     }
 
     state->is_active = activate;
-    reset_accumulation(state);
 
     if (activate) {
         zmk_keymap_layer_activate(state->toggle_layer);
@@ -146,17 +170,25 @@ static void layer_action_work_cb(struct k_work *work) {
     struct layer_state_action action;
 
     while (k_msgq_get(&threshold_temp_layer_action_msgq, &action, K_NO_WAIT) >= 0) {
+        if (action.layer != data->state.toggle_layer) {
+            continue;
+        }
+
         if (action.activate) {
-            data->state.activation_pending = false;
+            if (!data->state.activation_pending) {
+                continue;
+            }
 
             if (prior_idle_required(config, data->state.last_tapped_timestamp, k_uptime_get())) {
-                reset_accumulation(&data->state);
-                k_work_cancel_delayable(&layer_disable_works[action.layer]);
+                update_layer_state(&data->state, false);
                 continue;
             }
 
             update_layer_state(&data->state, true);
-        } else if (data->state.is_active && zmk_keymap_layer_active(action.layer)) {
+        } else if (data->state.is_active && zmk_keymap_layer_active(action.layer) &&
+                   !data->state.pressed_buttons && data->state.expires_at > 0 &&
+                   k_uptime_get() >= data->state.expires_at) {
+            // An input event may have extended the timeout after this action was queued.
             update_layer_state(&data->state, false);
         }
     }
@@ -193,6 +225,8 @@ static int handle_layer_state_changed(const struct device *dev, const zmk_event_
     if (data->state.is_active &&
         !zmk_keymap_layer_active(zmk_keymap_layer_index_to_id(data->state.toggle_layer))) {
         data->state.is_active = false;
+        data->state.activation_pending = false;
+        data->state.expires_at = 0;
         reset_accumulation(&data->state);
         k_work_cancel_delayable(&layer_disable_works[data->state.toggle_layer]);
     }
@@ -220,7 +254,7 @@ static int handle_position_state_changed(const struct device *dev, const zmk_eve
         return ret;
     }
 
-    if (data->state.is_active && config->num_positions > 0 &&
+    if ((data->state.is_active || data->state.activation_pending) && config->num_positions > 0 &&
         !position_is_excluded(config, event->position)) {
         update_layer_state(&data->state, false);
     }
@@ -298,7 +332,9 @@ static int threshold_temp_layer_handle_event(const struct device *dev, struct in
         return -EINVAL;
     }
 
-    if (!is_xy_movement(event)) {
+    bool mouse_button = is_mouse_button(event);
+
+    if (!is_xy_movement(event) && !mouse_button) {
         return ZMK_INPUT_PROC_CONTINUE;
     }
 
@@ -313,10 +349,24 @@ static int threshold_temp_layer_handle_event(const struct device *dev, struct in
     int64_t current_time = k_uptime_get();
     data->state.toggle_layer = layer;
 
-    if (data->state.is_active || data->state.activation_pending) {
-        if (timeout_ms > 0) {
-            k_work_reschedule(&layer_disable_works[layer], K_MSEC(timeout_ms));
+    if (mouse_button) {
+        uint8_t button_mask = BIT(event->code - INPUT_BTN_0);
+
+        if (event->value > 0) {
+            data->state.pressed_buttons |= button_mask;
+        } else {
+            data->state.pressed_buttons &= ~button_mask;
         }
+    }
+
+    if (data->state.is_active || data->state.activation_pending) {
+        refresh_timeout(&data->state, timeout_ms, current_time);
+        k_mutex_unlock(&data->lock);
+        return ZMK_INPUT_PROC_CONTINUE;
+    }
+
+    // Button releases must not reactivate a layer dismissed by a normal key or a combo.
+    if (mouse_button) {
         k_mutex_unlock(&data->lock);
         return ZMK_INPUT_PROC_CONTINUE;
     }
@@ -342,9 +392,7 @@ static int threshold_temp_layer_handle_event(const struct device *dev, struct in
         data->state.activation_pending = false;
         LOG_ERR("Failed to queue layer %d activation: %d", layer, ret);
     } else {
-        if (timeout_ms > 0) {
-            k_work_reschedule(&layer_disable_works[layer], K_MSEC(timeout_ms));
-        }
+        refresh_timeout(&data->state, timeout_ms, current_time);
         k_work_submit(&layer_action_work);
     }
 

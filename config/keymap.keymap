@@ -7,17 +7,13 @@
 #define AML_ACTIVATION_THRESHOLD 8
 #define AML_ACCUMULATION_WINDOW_MS 100
 #define AML_REQUIRE_PRIOR_IDLE_MS 300
-
-&zip_temp_layer {
-    require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
-    excluded-positions = <33 34 35>;
-};
+#define AML_TIMEOUT_MS 10000
 
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_threshold_temp_layer 4 10000>;
+        <&zip_threshold_temp_layer 4 AML_TIMEOUT_MS>;
 
     scroll {
         layers = <5>;
@@ -29,7 +25,7 @@
     };
 };
 
-&mkp_input_listener { input-processors = <&zip_temp_layer 4 10000>; };
+&mkp_input_listener { input-processors = <&zip_threshold_temp_layer 4 AML_TIMEOUT_MS>; };
 
 &lt {
     tapping-term-ms = <150>;
@@ -50,7 +46,7 @@
         activation-threshold = <AML_ACTIVATION_THRESHOLD>;
         accumulation-window-ms = <AML_ACCUMULATION_WINDOW_MS>;
         require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
-        excluded-positions = <33 34 35 36>;
+        excluded-positions = <33 34 35>;
     };
 
     combos {
