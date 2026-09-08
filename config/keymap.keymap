@@ -63,7 +63,7 @@
         };
 
         xn {
-            bindings = <&xn_macro>;
+            bindings = <&ns_combo 5 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
         };
@@ -203,6 +203,16 @@
 
             #binding-cells = <0>;
             mods = <(MOD_RGUI)>;
+        };
+
+        ns_combo: ns_combo {
+            compatible = "zmk,behavior-hold-tap";
+            label = "NS_COMBO";
+            bindings = <&mo>, <&xn_macro>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            hold-while-undecided;
         };
     };
 
