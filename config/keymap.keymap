@@ -88,6 +88,21 @@
             bindings = <&mt_to_dl LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
             key-positions = <33 34 35>;
         };
+
+        mb1 {
+            bindings = <&mkp MB1>;
+            key-positions = <33 19>;
+        };
+
+        mb2 {
+            bindings = <&mkp MB2>;
+            key-positions = <35 21>;
+        };
+
+        mb3 {
+            bindings = <&mkp MB3>;
+            key-positions = <34 20>;
+        };
     };
 
     behaviors {
