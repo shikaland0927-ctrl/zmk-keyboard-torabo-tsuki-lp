@@ -4,16 +4,10 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define AML_ACTIVATION_THRESHOLD 8
-#define AML_ACCUMULATION_WINDOW_MS 100
-#define AML_REQUIRE_PRIOR_IDLE_MS 300
-#define AML_TIMEOUT_MS 10000
-
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-        <&zip_threshold_temp_layer 4 AML_TIMEOUT_MS>;
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
 
     scroll {
         layers = <5>;
@@ -24,8 +18,6 @@
             <&zip_scroll_scaler 1 16>;
     };
 };
-
-&mkp_input_listener { input-processors = <&zip_threshold_temp_layer 4 AML_TIMEOUT_MS>; };
 
 &lt {
     tapping-term-ms = <150>;
@@ -40,25 +32,16 @@
 };
 
 / {
-    zip_threshold_temp_layer: zip_threshold_temp_layer {
-        compatible = "zmk,input-processor-threshold-temp-layer";
-        #input-processor-cells = <2>;
-        activation-threshold = <AML_ACTIVATION_THRESHOLD>;
-        accumulation-window-ms = <AML_ACCUMULATION_WINDOW_MS>;
-        require-prior-idle-ms = <AML_REQUIRE_PRIOR_IDLE_MS>;
-        excluded-positions = <33 34 35>;
-    };
-
     combos {
         compatible = "zmk,combos";
 
         kana {
-            bindings = <&mt_to_dl RS(RIGHT_GUI) LANG1>;
+            bindings = <&mt_kana RS(RIGHT_GUI) 0>;
             key-positions = <33 34>;
         };
 
         eisuu {
-            bindings = <&mt_to_dl LS(LEFT_GUI) LANGUAGE_2>;
+            bindings = <&mt_eisuu LS(LEFT_GUI) 0>;
             key-positions = <28 27>;
         };
 
@@ -66,12 +49,21 @@
             bindings = <&ns_combo 5 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
+            layers = <4>;
+        };
+
+        ns_eisuu {
+            bindings = <&ns_eisuu_combo 5 0>;
+            key-positions = <34 35>;
+            timeout-ms = <30>;
+            layers = <0 1 2 3>;
         };
 
         minus {
             bindings = <&kp MINUS>;
             key-positions = <27 26>;
             timeout-ms = <30>;
+            layers = <4>;
         };
 
         mute {
@@ -85,7 +77,7 @@
         };
 
         mission_control {
-            bindings = <&mt_to_dl LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
+            bindings = <&mt LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
             key-positions = <33 34 35>;
         };
 
@@ -145,6 +137,13 @@
             hold-while-undecided;
         };
 
+        tog_on: tog_on {
+            compatible = "zmk,behavior-toggle-layer";
+            label = "TOG_ON";
+            #binding-cells = <1>;
+            toggle-mode = "on";
+        };
+
         tog_off: tog_off {
             compatible = "zmk,behavior-toggle-layer";
             label = "TOG_OFF";
@@ -152,10 +151,20 @@
             toggle-mode = "off";
         };
 
-        mt_to_dl: mt_to_dl {
+        mt_kana: mt_kana {
             compatible = "zmk,behavior-hold-tap";
-            label = "MT_TO_DL";
-            bindings = <&kp_to_dl>, <&kp_to_dl>;
+            label = "MT_KANA";
+            bindings = <&kp>, <&kana_jp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            hold-while-undecided;
+        };
+
+        mt_eisuu: mt_eisuu {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MT_EISUU";
+            bindings = <&kp>, <&eisuu_default>;
 
             #binding-cells = <2>;
             tapping-term-ms = <150>;
@@ -207,6 +216,16 @@
             tapping-term-ms = <150>;
             hold-while-undecided;
         };
+
+        ns_eisuu_combo: ns_eisuu_combo {
+            compatible = "zmk,behavior-hold-tap";
+            label = "NS_EISUU_COMBO";
+            bindings = <&mo>, <&ns_macro>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            hold-while-undecided;
+        };
     };
 
     macros {
@@ -237,18 +256,24 @@
             label = "KP_IN_NAV";
         };
 
-        kp_to_dl: kp_to_dl {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings =
-                <&tog_off 4>,
-                <&macro_press>,
-                <&macro_param_1to1 &kp MACRO_PLACEHOLDER>,
-                <&macro_pause_for_release>,
-                <&macro_release>,
-                <&macro_param_1to1 &kp MACRO_PLACEHOLDER>;
+        // Track the input mode only when the kana/eisuu combo is tapped.
+        // Explicit on/off also lets repeated taps resynchronize with the host.
+        kana_jp: kana_jp {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <30>;
+            bindings = <&macro_press &tog_on 4>, <&macro_tap &kp LANG1>;
+            label = "KANA_JP";
+        };
 
-            label = "KP_TO_DL";
+        eisuu_default: eisuu_default {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <30>;
+            bindings = <&macro_press &tog_off 4>, <&macro_tap &kp LANG2>;
+            label = "EISUU_DEFAULT";
         };
 
         xn_macro: xn_macro {
@@ -256,6 +281,15 @@
             #binding-cells = <0>;
             bindings = <&kp X &kp N>;
             label = "XN_MACRO";
+        };
+
+        ns_macro: ns_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings = <&kp N &kp S>;
+            label = "NS_MACRO";
         };
 
         icloud: icloud {
@@ -316,6 +350,7 @@
             >;
         };
 
+        // Keep JP transparent so SYMBOL, NAV and NUM remain usable below it.
         JP {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
