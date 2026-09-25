@@ -26,11 +26,6 @@
     hold-while-undecided;
 };
 
-&mt {
-    tapping-term-ms = <150>;
-    hold-while-undecided;
-};
-
 / {
     combos {
         compatible = "zmk,combos";
