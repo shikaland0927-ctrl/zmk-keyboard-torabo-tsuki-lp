@@ -76,11 +76,6 @@
             key-positions = <53 54>;
         };
 
-        mission_control {
-            bindings = <&mt LC(LS(LEFT_GUI)) LC(UP_ARROW)>;
-            key-positions = <33 34 35>;
-        };
-
         mb1 {
             bindings = <&mkp MB1>;
             key-positions = <33 19>;
@@ -258,12 +253,14 @@
 
         // Track the input mode only when the kana/eisuu combo is tapped.
         // Explicit on/off also lets repeated taps resynchronize with the host.
+
         kana_jp: kana_jp {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press &tog_on 4>, <&macro_tap &kp LANG1>;
+            bindings = <&macro_press>, <&tog_on 4>, <&macro_tap>, <&kp LANG1>;
+
             label = "KANA_JP";
         };
 
@@ -272,7 +269,8 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press &tog_off 4>, <&macro_tap &kp LANG2>;
+            bindings = <&macro_press>, <&tog_off 4>, <&macro_tap>, <&kp LANG2>;
+
             label = "EISUU_DEFAULT";
         };
 
@@ -351,6 +349,7 @@
         };
 
         // Keep JP transparent so SYMBOL, NAV and NUM remain usable below it.
+
         JP {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
