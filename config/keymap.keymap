@@ -24,12 +24,12 @@
         compatible = "zmk,combos";
 
         kana {
-            bindings = <&mt_kana RS(RIGHT_GUI) 0>;
+            bindings = <&kana_jp>;
             key-positions = <33 34>;
         };
 
         eisuu {
-            bindings = <&mt_eisuu LS(LEFT_GUI) 0>;
+            bindings = <&eisuu_default>;
             key-positions = <28 27>;
         };
 
@@ -125,26 +125,6 @@
             label = "TOG_OFF";
             #binding-cells = <1>;
             toggle-mode = "off";
-        };
-
-        mt_kana: mt_kana {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MT_KANA";
-            bindings = <&kp>, <&kana_jp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            hold-while-undecided;
-        };
-
-        mt_eisuu: mt_eisuu {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MT_EISUU";
-            bindings = <&kp>, <&eisuu_default>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            hold-while-undecided;
         };
 
         left_in_nav: left_in_nav {
