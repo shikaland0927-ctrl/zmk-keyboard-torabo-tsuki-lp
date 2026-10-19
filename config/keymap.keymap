@@ -47,13 +47,6 @@
             layers = <0 1 2 3>;
         };
 
-        minus {
-            bindings = <&kp MINUS>;
-            key-positions = <27 26>;
-            timeout-ms = <30>;
-            layers = <4>;
-        };
-
         mute {
             bindings = <&kp K_MUTE>;
             key-positions = <63 64>;
