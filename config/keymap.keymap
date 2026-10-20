@@ -41,17 +41,17 @@
         };
 
         xn {
-            bindings = <&ns_combo 5 0>;
+            bindings = <&ns_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
-            layers = <4>;
+            layers = <3>;
         };
 
         ns_eisuu {
-            bindings = <&ns_eisuu_combo 5 0>;
+            bindings = <&ns_eisuu_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
-            layers = <0 1 2 3>;
+            layers = <0 1 2>;
         };
 
         mb1 {
@@ -71,34 +71,6 @@
     };
 
     behaviors {
-        hrm_r: hrm_r {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HRM_R";
-            bindings = <&kp>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <250>;
-            quick-tap-ms = <150>;
-            flavor = "balanced";
-            retro-tap;
-            hold-trigger-on-release;
-            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 30 38 39 40 41 42 43 44 52 53 54 55 56 57 58 59 60 61 62 63 64 65>;
-        };
-
-        hrm_l: hrm_l {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HRM_L";
-            bindings = <&kp>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <250>;
-            quick-tap-ms = <150>;
-            flavor = "balanced";
-            retro-tap;
-            hold-trigger-on-release;
-            hold-trigger-key-positions = <52 53 54 55 56 57 58 6 7 8 9 10 11 18 19 20 21 22 23 31 32 33 34 35 36 37 45 46 47 48 49 50 51 59 60 61 62 63 64 65>;
-        };
-
         lt_to_nav: lt_to_nav {
             compatible = "zmk,behavior-hold-tap";
             label = "LT_TO_NAV";
@@ -179,16 +151,6 @@
             tapping-term-ms = <150>;
             hold-while-undecided;
         };
-
-        lt_enter: lt_enter {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LT_ENTER";
-            bindings = <&mo>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            hold-while-undecided;
-        };
     };
 
     macros {
@@ -227,7 +189,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press>, <&tog_on 4>, <&macro_tap>, <&kp LANG1>;
+            bindings = <&macro_press>, <&tog_on 3>, <&macro_tap>, <&kp LANG1>;
 
             label = "KANA_JP";
         };
@@ -237,7 +199,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press>, <&tog_off 4>, <&macro_tap>, <&kp LANG2>;
+            bindings = <&macro_press>, <&tog_off 3>, <&macro_tap>, <&kp LANG2>;
 
             label = "EISUU_DEFAULT";
         };
@@ -278,21 +240,21 @@
 
         DEFAULT {
             bindings = <
-&trans  &trans                         &trans                             &trans         &trans                           &trans                                 &trans              &trans  &trans  &trans                           &trans                     &trans
-&trans  &kp Q                          &kp Y                              &kp U          &kp J                            &kp P                                  &kp G               &kp D   &kp M   &kp Z                            &kp B                      &trans
-&trans  &kp E                          &kp I                              &kp A          &kp O                            &kp L        &trans     &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                      &trans
-&trans  &mt LEFT_SHIFT SEMICOLON       &mt LEFT_GUI MINUS                 &kp C          &kp V                            &kp X        &trans     &trans         &kp F               &kp W   &kp R   &mt RIGHT_GUI COMMA              &mt RIGHT_SHIFT PERIOD     &trans
-&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &mt LC(LA(LS(LEFT_GUI))) ESCAPE  &lt 1 ENTER  &lt 3 TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
+&trans  &trans                         &trans                             &trans         &trans      &trans                                                    &trans              &trans  &trans  &trans                           &trans                     &trans
+&trans  &kp Q                          &kp Y                              &kp U          &kp J       &kp P                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                      &trans
+&trans  &kp E                          &kp I                              &kp A          &kp O       &kp L        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                      &trans
+&trans  &mt LEFT_SHIFT SEMICOLON       &mt LEFT_GUI MINUS                 &kp C          &kp V       &kp X        &trans                        &trans         &kp F               &kp W   &kp R   &mt RIGHT_GUI COMMA              &mt RIGHT_SHIFT PERIOD     &trans
+&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &kp ESCAPE  &lt 1 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
             >;
         };
 
         SYMBOL {
             bindings = <
-&trans  &trans           &trans         &trans         &trans            &trans                       &trans     &trans                &trans             &trans                 &trans         &trans
-&trans  &kp EXCLAMATION  &kp QUESTION   &kp AMPERSAND  &kp PIPE          &kp TILDE                    &trans     &kp LEFT_BRACE        &kp SQT            &kp RIGHT_BRACE        &kp AT_SIGN    &trans
-&trans  &kp PLUS         &kp MINUS      &kp ASTERISK   &kp SLASH         &kp PERCENT  &trans  &trans  &trans     &kp LEFT_PARENTHESIS  &kp DOUBLE_QUOTES  &kp RIGHT_PARENTHESIS  &kp HASH       &trans
-&trans  &kp CARET        &kp LESS_THAN  &kp EQUAL      &kp GREATER_THAN  &kp DOLLAR   &trans  &trans  &kp GRAVE  &kp LEFT_BRACKET      &kp UNDERSCORE     &kp RIGHT_BRACKET      &kp BACKSLASH  &trans
-&trans  &trans           &trans         &trans         &trans            &trans       &trans  &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
+&trans  &trans                &trans                &trans                &trans            &trans                       &trans     &trans                &trans             &trans                 &trans         &trans
+&trans  &kp EXCLAMATION       &kp QUESTION          &kp AMPERSAND         &kp PIPE          &kp TILDE                    &trans     &kp LEFT_BRACE        &kp SQT            &kp RIGHT_BRACE        &kp AT_SIGN    &trans
+&trans  &kp PLUS              &kp MINUS             &kp ASTERISK          &kp SLASH         &kp PERCENT  &trans  &trans  &trans     &kp LEFT_PARENTHESIS  &kp DOUBLE_QUOTES  &kp RIGHT_PARENTHESIS  &kp HASH       &trans
+&trans  &kp CARET             &kp LESS_THAN         &kp EQUAL             &kp GREATER_THAN  &kp DOLLAR   &trans  &trans  &kp GRAVE  &kp LEFT_BRACKET      &kp UNDERSCORE     &kp RIGHT_BRACKET      &kp BACKSLASH  &trans
+&trans  &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans            &trans       &trans  &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
             >;
         };
 
@@ -303,16 +265,6 @@
 &trans  &trans  &kp_in_nav NUMBER_4  &kp_in_nav N5        &kp_in_nav NUMBER_6  &kp_in_nav PLUS   &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END           &trans
 &trans  &trans  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &trans            &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &kp_in_nav LG(LC(F))     &trans
 &trans  &trans  &trans               &kp_in_nav NUMBER_0  &trans               &trans            &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans                   &trans
-            >;
-        };
-
-        NUM {
-            bindings = <
-&trans  &trans                &trans                &trans                &trans  &trans                   &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp F1                &kp F2                &kp F3                &kp F4  &kp F5                   &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp F6                &kp F7                &kp F8                &kp F9  &kp F10  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &kp LG(LS(NUMBER_3))  &kp LS(LG(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans  &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans                &trans                &trans                &trans  &trans   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
