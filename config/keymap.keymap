@@ -41,14 +41,14 @@
         };
 
         xn {
-            bindings = <&ns_combo 3 0>;
+            bindings = <&ns_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
             layers = <3>;
         };
 
         ns_eisuu {
-            bindings = <&ns_eisuu_combo 3 0>;
+            bindings = <&ns_eisuu_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
             layers = <0 1 2>;
