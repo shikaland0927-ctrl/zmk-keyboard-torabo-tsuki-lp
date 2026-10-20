@@ -276,11 +276,11 @@
 
         DEFAULT {
             bindings = <
-&trans  &trans                         &trans                             &trans  &trans             &trans                                                     &trans                  &trans              &trans  &trans                           &trans                          &trans
-&trans  &kp Q                          &kp J                              &kp U   &kp COMMA          &kp DOT                                                    &kp F                   &kp W               &kp R   &kp Y                            &kp P                           &trans
-&trans  &kp E                          &kp I                              &kp A   &hrm_l LEFT_GUI O  &kp MINUS      &trans              &trans                  &kp K                   &hrm_r RIGHT_GUI T  &kp N   &kp S                            &kp H                           &trans
-&trans  &hrm_l LC(LA(LS(LEFT_GUI))) X  &kp L                              &kp C   &kp V              &kp SEMICOLON  &trans              &trans                  &kp G                   &kp D               &kp M   &kp Z                            &hrm_r RC(RA(RS(RIGHT_GUI))) B  &trans
-&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &trans  &lt 3 ENTER        &lt 1 SPACE    &mt LEFT_SHIFT TAB  &mt RIGHT_SHIFT ESCAPE  &lt_to_nav 0 BACKSPACE  &trans              &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP       &trans
+&trans  &trans                         &trans                             &trans  &trans      &trans                                 &trans              &trans  &trans  &trans                           &trans                     &trans
+&trans  &kp P                          &kp Y                              &kp U   &kp J       &kp Q                                  &kp G               &kp D   &kp M   &kp Z                            &kp B                      &trans
+&trans  &kp E                          &kp I                              &kp A   &kp O       &kp L        &trans     &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                      &trans
+&trans  &mt LEFT_SHIFT SEMICOLON       &mt LEFT_GUI MINUS                 &kp C   &kp V       &kp X        &trans     &trans         &kp F               &kp W   &kp R   &mt RIGHT_GUI COMMA              &mt RIGHT_SHIFT PERIOD     &trans
+&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &trans  &kp ESCAPE  &lt 1 ENTER  &lt 3 TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
             >;
         };
 
