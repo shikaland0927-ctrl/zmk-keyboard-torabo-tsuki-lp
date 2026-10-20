@@ -24,6 +24,8 @@
     flavor = "hold-preferred";
 };
 
+&mt { hold-while-undecided; };
+
 / {
     combos {
         compatible = "zmk,combos";
