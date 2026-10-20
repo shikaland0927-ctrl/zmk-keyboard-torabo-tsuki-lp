@@ -54,6 +54,13 @@
             layers = <0 1 2>;
         };
 
+        minus {
+            bindings = <&kp MINUS>;
+            key-positions = <27 26>;
+            timeout-ms = <30>;
+            layers = <3>;
+        };
+
         mb1 {
             bindings = <&mkp MB1>;
             key-positions = <33 19>;
