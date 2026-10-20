@@ -267,11 +267,11 @@
 
         NAV {
             bindings = <
-&trans  &trans  &trans               &trans               &trans               &trans                            &trans                       &trans                           &trans                            &trans                        &trans                   &trans
-&trans  &trans  &kp_in_nav N7        &kp_in_nav NUMBER_8  &kp_in_nav NUMBER_9  &kp_in_nav MINUS                  &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &kp_in_nav LC(UP_ARROW)  &trans
-&trans  &trans  &kp_in_nav NUMBER_4  &kp_in_nav N5        &kp_in_nav NUMBER_6  &kp_in_nav PLUS   &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END           &trans
-&trans  &trans  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &trans            &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &kp_in_nav LG(LC(F))     &trans
-&trans  &trans  &trans               &kp_in_nav NUMBER_0  &trans               &trans            &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans                   &trans
+&trans  &trans               &trans               &trans               &trans               &trans                             &trans                       &trans                           &trans                            &trans                        &trans                   &trans
+&trans  &trans               &kp_in_nav N7        &kp_in_nav NUMBER_8  &kp_in_nav NUMBER_9  &kp_in_nav MINUS                   &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &kp_in_nav LC(UP_ARROW)  &trans
+&trans  &trans               &kp_in_nav NUMBER_4  &kp_in_nav N5        &kp_in_nav NUMBER_6  &kp_in_nav PLUS    &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END           &trans
+&trans  &kp_in_nav NUMBER_0  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &kp_in_nav PERIOD  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &kp_in_nav LG(LC(F))     &trans
+&trans  &trans               &trans               &trans               &trans               &trans             &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans                   &trans
             >;
         };
 
