@@ -24,10 +24,7 @@
     flavor = "hold-preferred";
 };
 
-&mt {
-    hold-while-undecided;
-    flavor = "balanced";
-};
+&mt { flavor = "balanced"; };
 
 / {
     combos {
