@@ -24,13 +24,12 @@
     flavor = "hold-preferred";
 };
 
-flavor = "
+&mt {
+    hold-while-undecided;
+    flavor = "balanced";
+};
 
-balanced {
-    ";};
-
-/
-
+/ {
     combos {
         compatible = "zmk,combos";
 
