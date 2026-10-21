@@ -2,12 +2,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: shikaland0927-ctrl
+      url-base: https://github.com/shikaland0927-ctrl
     - name: sekigon-gonnoc
       url-base: https://github.com/sekigon-gonnoc
   projects:
+    # ZMK v0.3 + hold-tap balanced-key-positions (used by &my_mt)
     - name: zmk
-      remote: zmkfirmware
-      revision: v0.3
+      remote: shikaland0927-ctrl
+      revision: v0.3-balanced-key-positions
       import: app/west.yml
     - name: zmk-component-bmp-boost
       remote: sekigon-gonnoc
