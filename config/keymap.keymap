@@ -169,6 +169,28 @@
             hold-while-undecided;
             balanced-key-positions = <56 57 58 59 60>;
         };
+
+        // Hyper+V sends Option+Shift+Command+V (Paste and Match Style).
+        // Morph only while both Left Alt and Left Ctrl are held, then mask Ctrl.
+
+        hyper_v: hyper_v {
+            compatible = "zmk,behavior-mod-morph";
+            label = "HYPER_V";
+            bindings = <&kp V>, <&hyper_v_ctrl>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+            keep-mods = <(MOD_LALT)>;
+        };
+
+        hyper_v_ctrl: hyper_v_ctrl {
+            compatible = "zmk,behavior-mod-morph";
+            label = "HYPER_V_CTRL";
+            bindings = <&kp V>, <&kp LG(LA(LS(V)))>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL)>;
+        };
     };
 
     macros {
@@ -261,7 +283,7 @@
 &trans  &trans                         &trans                             &trans         &trans      &trans                                                    &trans              &trans  &trans  &trans                           &trans                     &trans
 &trans  &kp Q                          &kp Y                              &kp U          &kp J       &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                      &trans
 &trans  &kp E                          &kp I                              &kp A          &kp O       &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                      &trans
-&trans  &my_mt LEFT_SHIFT SEMICOLON    &my_mt LEFT_GUI COLON              &kp C          &kp V       &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &my_mt RIGHT_GUI COMMA           &my_mt RIGHT_SHIFT PERIOD  &trans
+&trans  &my_mt LEFT_SHIFT SEMICOLON    &my_mt LEFT_GUI COLON              &kp C          &hyper_v    &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &my_mt RIGHT_GUI COMMA           &my_mt RIGHT_SHIFT PERIOD  &trans
 &trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &kp ESCAPE  &lt 1 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
             >;
         };
