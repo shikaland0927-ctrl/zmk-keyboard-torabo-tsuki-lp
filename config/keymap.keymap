@@ -45,36 +45,36 @@
         xn {
             bindings = <&ns_combo 4 0>;
             key-positions = <34 35>;
-            timeout-ms = <50>;
             layers = <1>;
         };
 
         ns_eisuu {
             bindings = <&ns_eisuu_combo 4 0>;
             key-positions = <34 35>;
-            timeout-ms = <30>;
             layers = <0>;
         };
 
         minus {
             bindings = <&kp MINUS>;
             key-positions = <27 26>;
-            timeout-ms = <30>;
             layers = <1>;
         };
 
         mb1 {
             bindings = <&mkp MB1>;
+            timeout-ms = <80>;
             key-positions = <33 19>;
         };
 
         mb2 {
             bindings = <&mkp MB2>;
+            timeout-ms = <80>;
             key-positions = <35 21>;
         };
 
         mb3 {
             bindings = <&mkp MB3>;
+            timeout-ms = <80>;
             key-positions = <34 20>;
         };
     };
