@@ -33,32 +33,34 @@
         kana {
             bindings = <&kana_jp>;
             key-positions = <33 34>;
+            layers = <0 1>;
         };
 
         eisuu {
             bindings = <&eisuu_default>;
             key-positions = <28 27>;
+            layers = <0 1>;
         };
 
         xn {
             bindings = <&ns_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <50>;
-            layers = <3>;
+            layers = <1>;
         };
 
         ns_eisuu {
             bindings = <&ns_eisuu_combo 4 0>;
             key-positions = <34 35>;
             timeout-ms = <30>;
-            layers = <0 1 2>;
+            layers = <0>;
         };
 
         minus {
             bindings = <&kp MINUS>;
             key-positions = <27 26>;
             timeout-ms = <30>;
-            layers = <3>;
+            layers = <1>;
         };
 
         mb1 {
@@ -177,10 +179,10 @@
             #binding-cells = <0>;
             bindings =
                 <&macro_press>,
-                <&mo 2 &kp RIGHT_GUI>,
+                <&mo 3 &kp RIGHT_GUI>,
                 <&macro_pause_for_release>,
                 <&macro_release>,
-                <&mo 2 &kp RIGHT_GUI>;
+                <&mo 3 &kp RIGHT_GUI>;
 
             label = "MO_TO_NAV";
         };
@@ -207,7 +209,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press>, <&tog_on 3>, <&macro_tap>, <&kp LANG1>;
+            bindings = <&macro_press>, <&tog_on 1>, <&macro_tap>, <&kp LANG1>;
 
             label = "KANA_JP";
         };
@@ -217,7 +219,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             tap-ms = <30>;
-            bindings = <&macro_press>, <&tog_off 3>, <&macro_tap>, <&kp LANG2>;
+            bindings = <&macro_press>, <&tog_off 1>, <&macro_tap>, <&kp LANG2>;
 
             label = "EISUU_DEFAULT";
         };
@@ -262,7 +264,20 @@
 &trans  &kp Q                          &kp Y                              &kp U          &kp J       &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                      &trans
 &trans  &kp E                          &kp I                              &kp A          &kp O       &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                      &trans
 &trans  &my_mt LEFT_SHIFT SEMICOLON    &my_mt LEFT_GUI COLON              &kp C          &kp V       &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &my_mt RIGHT_GUI COMMA           &my_mt RIGHT_SHIFT PERIOD  &trans
-&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &kp ESCAPE  &lt 1 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
+&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &kp ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP  &trans
+            >;
+        };
+
+        // Keep JP transparent and right above DEFAULT, so combos limited to
+        // DEFAULT/JP stay off while SYMBOL or NAV is held.
+
+        JP {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -283,18 +298,6 @@
 &trans  &trans               &kp_in_nav NUMBER_4  &kp_in_nav N5        &kp_in_nav NUMBER_6  &kp_in_nav PLUS    &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END           &trans
 &trans  &kp_in_nav NUMBER_0  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &kp_in_nav PERIOD  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &kp_in_nav LG(LC(F))     &trans
 &trans  &trans               &trans               &trans               &trans               &trans             &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans                   &trans
-            >;
-        };
-
-        // Keep JP transparent so SYMBOL, NAV and NUM remain usable below it.
-
-        JP {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
