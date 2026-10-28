@@ -57,6 +57,7 @@
         minus {
             bindings = <&kp MINUS>;
             key-positions = <27 26>;
+            timeout-ms = <30>;
             layers = <1>;
         };
 
