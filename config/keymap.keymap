@@ -43,15 +43,15 @@
         };
 
         xn {
-            bindings = <&ns_combo 4 0>;
+            bindings = <&xn_macro>;
             key-positions = <34 35>;
             layers = <1>;
         };
 
-        ns_eisuu {
-            bindings = <&ns_eisuu_combo 4 0>;
-            key-positions = <34 35>;
-            layers = <0>;
+        rc_scroll {
+            bindings = <&rc_combo 4 0>;
+            key-positions = <48 49>;
+            layers = <0 1>;
         };
 
         minus {
@@ -141,22 +141,13 @@
             mods = <(MOD_RGUI)>;
         };
 
-        ns_combo: ns_combo {
+        rc_combo: rc_combo {
             compatible = "zmk,behavior-hold-tap";
-            label = "NS_COMBO";
-            bindings = <&mo>, <&xn_macro>;
+            label = "RC_COMBO";
+            bindings = <&mo>, <&rc_macro>;
 
             #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            hold-while-undecided;
-        };
-
-        ns_eisuu_combo: ns_eisuu_combo {
-            compatible = "zmk,behavior-hold-tap";
-            label = "NS_EISUU_COMBO";
-            bindings = <&mo>, <&ns_macro>;
-
-            #binding-cells = <2>;
+            flavor = "hold-preferred";
             tapping-term-ms = <150>;
             hold-while-undecided;
         };
@@ -232,13 +223,13 @@
             label = "XN_MACRO";
         };
 
-        ns_macro: ns_macro {
+        rc_macro: rc_macro {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <30>;
             tap-ms = <30>;
-            bindings = <&kp N &kp S>;
-            label = "NS_MACRO";
+            bindings = <&kp R &kp COMMA>;
+            label = "RC_MACRO";
         };
 
         icloud: icloud {
