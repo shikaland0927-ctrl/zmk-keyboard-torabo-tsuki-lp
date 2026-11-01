@@ -49,7 +49,7 @@
         };
 
         rc_scroll {
-            bindings = <&rc_combo 4 0>;
+            bindings = <&mo 4>;
             key-positions = <48 49>;
             layers = <0 1>;
         };
@@ -141,17 +141,6 @@
             mods = <(MOD_RGUI)>;
         };
 
-        rc_combo: rc_combo {
-            compatible = "zmk,behavior-hold-tap";
-            label = "RC_COMBO";
-            bindings = <&mo>, <&rc_macro>;
-
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <150>;
-            hold-while-undecided;
-        };
-
         my_mt: my_mt {
             compatible = "zmk,behavior-hold-tap";
             label = "MY_MT";
@@ -221,15 +210,6 @@
             #binding-cells = <0>;
             bindings = <&kp X &kp N>;
             label = "XN_MACRO";
-        };
-
-        rc_macro: rc_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <30>;
-            tap-ms = <30>;
-            bindings = <&kp R &kp COMMA>;
-            label = "RC_MACRO";
         };
 
         icloud: icloud {
