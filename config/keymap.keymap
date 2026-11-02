@@ -31,7 +31,7 @@
         compatible = "zmk,combos";
 
         kana {
-            bindings = <&kana_jp>;
+            bindings = <&tn_combo 4 0>;
             key-positions = <33 34>;
             layers = <0 1>;
         };
@@ -46,12 +46,6 @@
             bindings = <&xn_macro>;
             key-positions = <34 35>;
             layers = <1>;
-        };
-
-        rc_scroll {
-            bindings = <&mo 4>;
-            key-positions = <48 49>;
-            layers = <0 1>;
         };
 
         minus {
@@ -139,6 +133,17 @@
 
             #binding-cells = <0>;
             mods = <(MOD_RGUI)>;
+        };
+
+        tn_combo: tn_combo {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TN_COMBO";
+            bindings = <&mo>, <&kana_jp>;
+
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <150>;
+            hold-while-undecided;
         };
 
         my_mt: my_mt {
