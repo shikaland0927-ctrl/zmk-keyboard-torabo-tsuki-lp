@@ -31,7 +31,7 @@
         compatible = "zmk,combos";
 
         kana {
-            bindings = <&tn_combo 4 0>;
+            bindings = <&kana_jp>;
             key-positions = <33 34>;
             layers = <0 1>;
         };
@@ -68,7 +68,7 @@
         };
 
         mb3 {
-            bindings = <&mkp MB3>;
+            bindings = <&nm_combo 4 MB3>;
             timeout-ms = <80>;
             key-positions = <34 20>;
         };
@@ -135,10 +135,10 @@
             mods = <(MOD_RGUI)>;
         };
 
-        tn_combo: tn_combo {
+        nm_combo: nm_combo {
             compatible = "zmk,behavior-hold-tap";
-            label = "TN_COMBO";
-            bindings = <&mo>, <&kana_jp>;
+            label = "NM_COMBO";
+            bindings = <&mo>, <&mkp>;
 
             #binding-cells = <2>;
             flavor = "hold-preferred";
