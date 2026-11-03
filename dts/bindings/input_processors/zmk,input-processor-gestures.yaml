@@ -3,8 +3,8 @@
 
 description: >
   Input processor for turning a quick flick of relative XY movement into one
-  directional behavior tap. The tapped bindings are read from the gesture layer.
-  Ported from pite1222/zmk (Conductor firmware).
+  directional behavior tap. Ported from pite1222/zmk (Conductor firmware), with
+  the bindings held by this node instead of keys on the gesture layer.
 
 compatible: "zmk,input-processor-gestures"
 
@@ -32,11 +32,7 @@ properties:
   tap-ms:
     type: int
     description: Press-to-release time of the tapped binding (default 30)
-  layer-id:
-    type: int
+  bindings:
+    type: phandle-array
     required: true
-    description: Layer that holds the gesture bindings
-  positions:
-    type: array
-    required: true
-    description: Key positions on that layer for up, down, left, right
+    description: Behaviors to tap for up, down, left, right (exactly four)

@@ -41,23 +41,31 @@
 &mt { flavor = "balanced"; };
 
 / {
-    // Flick the trackball while GESTURE (Esc) or WINDOW (A+O) is held to tap one of its bindings.
-    // positions = up, down, left, right on that layer (same keys as the NAV arrows).
+    // Flick the trackball while GESTURE (Esc) or WINDOW (A+O) is held to tap one of these
+    // bindings (up, down, left, right). They are only reachable by flicking, not by keys.
     // None of the gestures is used repeatedly, so ignore the ball for 800 ms after one fires.
 
     zip_gestures: zip_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
-        layer-id = <5>;
-        positions = <34 33 32 35>;
+        bindings =
+            <&kp LC(UP_ARROW)>,
+            <&kp LC(DOWN_ARROW)>,
+            <&kp F11>,
+            <&kp LG(LC(F))>;
+
         cooldown-ms = <800>;
     };
 
     zip_window_gestures: zip_window_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
-        layer-id = <6>;
-        positions = <34 33 32 35>;
+        bindings =
+            <&kp LC(LG(UP_ARROW))>,
+            <&kp LC(LG(DOWN_ARROW))>,
+            <&kp LC(LG(LEFT_ARROW))>,
+            <&kp LC(LG(RIGHT_ARROW))>;
+
         cooldown-ms = <800>;
     };
 
@@ -333,29 +341,27 @@
             >;
         };
 
-        // Hold Esc. The K/T/N/S bindings are also the trackball flick
-        // left/down/up/right (read by &zip_gestures above).
+        // Hold Esc to flick the trackball for &zip_gestures (keys stay transparent).
 
         GESTURE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans   &trans              &trans            &trans         &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans   &trans              &trans            &trans         &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp F11  &kp LC(DOWN_ARROW)  &kp LC(UP_ARROW)  &kp LG(LC(F))  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
-        // Hold A+O (tap is eisuu). The K/T/N/S bindings are also the trackball
-        // flick left/down/up/right (read by &zip_window_gestures above).
+        // Hold A+O (tap is eisuu) to flick for &zip_window_gestures (keys stay transparent).
 
         WINDOW {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                  &trans                &trans                   &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                  &trans                &trans                   &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LC(LG(LEFT_ARROW))  &kp LC(LG(DOWN_ARROW))  &kp LC(LG(UP_ARROW))  &kp LC(LG(RIGHT_ARROW))  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                &trans                   &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                &trans                   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };

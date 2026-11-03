@@ -5,7 +5,9 @@
  * Ported from pite1222/zmk (release/conductor-1.0.4,
  * app/src/pointing/input_processor_gestures.c) without the per-endpoint
  * override, which needs Conductor's custom Studio RPC. The tap is deferred to
- * the system work queue (see gestures_tap_work_cb).
+ * the system work queue (see gestures_tap_work_cb), and the four bindings are
+ * a property of the processor instead of keys on the gesture layer, so they
+ * are only reachable by flicking the ball.
  */
 
 #define DT_DRV_COMPAT zmk_input_processor_gestures
@@ -41,8 +43,8 @@ struct gestures_config {
     uint16_t timeout_ms;
     uint16_t cooldown_ms;
     uint16_t tap_ms;
-    uint8_t layer_id;
-    uint16_t positions[GESTURE_DIRECTION_COUNT];
+    // up, down, left, right
+    const struct zmk_behavior_binding *bindings;
 };
 
 struct gestures_data {
@@ -81,14 +83,9 @@ static int gestures_direction(const struct gestures_config *cfg, const struct ge
     return data->x < 0 ? GESTURE_LEFT : GESTURE_RIGHT;
 }
 
-// The four bindings live on the gesture layer, so they can be edited like normal keys.
 static int gestures_queue_tap(const struct gestures_config *cfg, int direction,
                               uint8_t input_device_index) {
-    const struct zmk_behavior_binding *binding =
-        zmk_keymap_get_layer_binding_at_idx(cfg->layer_id, cfg->positions[direction]);
-    if (binding == NULL) {
-        return -EINVAL;
-    }
+    const struct zmk_behavior_binding *binding = &cfg->bindings[direction];
 
     struct zmk_behavior_binding_event event = {
         .position =
@@ -189,8 +186,10 @@ static int gestures_init(const struct device *dev) {
 }
 
 #define GESTURES_INST(n)                                                                           \
-    BUILD_ASSERT(DT_INST_PROP_LEN(n, positions) == GESTURE_DIRECTION_COUNT,                        \
-                 "Gesture processors need exactly four positions: up, down, left, right");        \
+    static const struct zmk_behavior_binding gestures_bindings_##n[] = {                           \
+        LISTIFY(DT_INST_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), DT_DRV_INST(n))}; \
+    BUILD_ASSERT(ARRAY_SIZE(gestures_bindings_##n) == GESTURE_DIRECTION_COUNT,                     \
+                 "Gesture processors need exactly four bindings: up, down, left, right");          \
     static struct gestures_data gestures_data_##n = {};                                            \
     static const struct gestures_config gestures_config_##n = {                                    \
         .index = n,                                                                                \
@@ -201,8 +200,7 @@ static int gestures_init(const struct device *dev) {
         .timeout_ms = DT_INST_PROP_OR(n, timeout_ms, 180),                                         \
         .cooldown_ms = DT_INST_PROP_OR(n, cooldown_ms, 220),                                       \
         .tap_ms = DT_INST_PROP_OR(n, tap_ms, 30),                                                  \
-        .layer_id = DT_INST_PROP(n, layer_id),                                                     \
-        .positions = DT_INST_PROP(n, positions),                                                   \
+        .bindings = gestures_bindings_##n,                                                         \
     };                                                                                             \
     DEVICE_DT_INST_DEFINE(n, gestures_init, NULL, &gestures_data_##n, &gestures_config_##n,        \
                           POST_KERNEL, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,                        \
