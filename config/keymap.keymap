@@ -17,6 +17,13 @@
             <&zip_xy_to_scroll_mapper>,
             <&zip_scroll_scaler 1 16>;
     };
+
+    gesture {
+        layers = <5>;
+        input-processors =
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_gestures>;
+    };
 };
 
 &lt {
@@ -27,6 +34,16 @@
 &mt { flavor = "balanced"; };
 
 / {
+    // Flick the trackball while GESTURE is held to tap one of its bindings.
+    // positions = up, down, left, right on GESTURE (same keys as the NAV arrows).
+
+    zip_gestures: zip_gestures {
+        compatible = "zmk,input-processor-gestures";
+        #input-processor-cells = <0>;
+        layer-id = <5>;
+        positions = <34 33 32 35>;
+    };
+
     combos {
         compatible = "zmk,combos";
 
@@ -237,11 +254,11 @@
 
         DEFAULT {
             bindings = <
-&trans  &trans                         &trans                             &trans         &trans      &trans                                                    &trans              &trans  &trans  &trans                           &trans                        &trans
-&trans  &kp Q                          &kp Y                              &kp U          &kp J       &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                         &trans
-&trans  &kp E                          &kp I                              &kp A          &kp O       &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                         &trans
-&trans  &my_mt LEFT_SHIFT COLON        &mt LEFT_GUI PERIOD                &kp C          &kp V       &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &mt RIGHT_GUI COMMA              &my_mt RIGHT_SHIFT SEMICOLON  &trans
-&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &kp ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP     &trans
+&trans  &trans                         &trans                             &trans         &trans        &trans                                                    &trans              &trans  &trans  &trans                           &trans                        &trans
+&trans  &kp Q                          &kp Y                              &kp U          &kp J         &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                         &trans
+&trans  &kp E                          &kp I                              &kp A          &kp O         &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                         &trans
+&trans  &my_mt LEFT_SHIFT COLON        &mt LEFT_GUI PERIOD                &kp C          &kp V         &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &mt RIGHT_GUI COMMA              &my_mt RIGHT_SHIFT SEMICOLON  &trans
+&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &lt 5 ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP     &trans
             >;
         };
 
@@ -271,9 +288,9 @@
         NAV {
             bindings = <
 &trans  &trans               &trans               &trans               &trans               &trans                             &trans                       &trans                           &trans                            &trans                        &trans                   &trans
-&trans  &trans               &kp_in_nav N7        &kp_in_nav NUMBER_8  &kp_in_nav NUMBER_9  &kp_in_nav MINUS                   &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &kp_in_nav LC(UP_ARROW)  &trans
+&trans  &trans               &kp_in_nav N7        &kp_in_nav NUMBER_8  &kp_in_nav NUMBER_9  &kp_in_nav MINUS                   &kp_in_nav LC(LEFT_ARROW)    &kp GRAVE                        &kp TAB                           &kp_in_nav RC(RIGHT_ARROW)    &trans                   &trans
 &trans  &trans               &kp_in_nav NUMBER_4  &kp_in_nav N5        &kp_in_nav NUMBER_6  &kp_in_nav PLUS    &trans  &trans  &left_in_nav                 &down_in_nav                     &up_in_nav                        &right_in_nav                 &kp_in_nav END           &trans
-&trans  &kp_in_nav NUMBER_0  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &kp_in_nav PERIOD  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &kp_in_nav LG(LC(F))     &trans
+&trans  &kp_in_nav NUMBER_0  &kp_in_nav NUMBER_1  &kp_in_nav NUMBER_2  &kp_in_nav NUMBER_3  &kp_in_nav PERIOD  &trans  &trans  &kp_in_nav LG(LEFT_BRACKET)  &kp_in_nav LS(LG(LEFT_BRACKET))  &kp_in_nav RS(RG(RIGHT_BRACKET))  &kp_in_nav RG(RIGHT_BRACKET)  &trans                   &trans
 &trans  &trans               &trans               &trans               &trans               &trans             &trans  &trans  &trans                       &trans                           &trans                            &trans                        &trans                   &trans
             >;
         };
@@ -285,6 +302,19 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        // Hold Esc. The K/T/N/S bindings are also the trackball flick
+        // left/down/up/right (read by &zip_gestures above).
+
+        GESTURE {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans   &trans              &trans            &trans         &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans   &trans              &trans            &trans         &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp F11  &kp LC(DOWN_ARROW)  &kp LC(UP_ARROW)  &kp LG(LC(F))  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
             >;
         };
     };

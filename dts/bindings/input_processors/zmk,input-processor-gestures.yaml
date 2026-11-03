@@ -1,0 +1,42 @@
+# Copyright (c) 2026 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: >
+  Input processor for turning a quick flick of relative XY movement into one
+  directional behavior tap. The tapped bindings are read from the gesture layer.
+  Ported from pite1222/zmk (Conductor firmware).
+
+compatible: "zmk,input-processor-gestures"
+
+include: ip_zero_param.yaml
+
+properties:
+  type:
+    type: int
+    description: Input event type to watch (default INPUT_EV_REL)
+  x-code:
+    type: int
+    description: X axis event code (default INPUT_REL_X)
+  y-code:
+    type: int
+    description: Y axis event code (default INPUT_REL_Y)
+  threshold:
+    type: int
+    description: Movement on one axis that fires a gesture within timeout-ms (default 120)
+  timeout-ms:
+    type: int
+    description: Window for reaching the threshold; slower movement is discarded (default 180)
+  cooldown-ms:
+    type: int
+    description: Time after a gesture during which movement is ignored (default 220)
+  tap-ms:
+    type: int
+    description: Press-to-release time of the tapped binding (default 30)
+  layer-id:
+    type: int
+    required: true
+    description: Layer that holds the gesture bindings
+  positions:
+    type: array
+    required: true
+    description: Key positions on that layer for up, down, left, right

@@ -1,0 +1,10 @@
+menu "torabo-tsuki LP"
+
+config ZMK_INPUT_PROCESSOR_GESTURES
+    bool "Trackball flick gesture input processor"
+    default y
+    depends on ZMK_POINTING
+    depends on DT_HAS_ZMK_INPUT_PROCESSOR_GESTURES_ENABLED
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+endmenu
