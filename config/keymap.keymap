@@ -36,12 +36,14 @@
 / {
     // Flick the trackball while GESTURE is held to tap one of its bindings.
     // positions = up, down, left, right on GESTURE (same keys as the NAV arrows).
+    // None of the gestures is used repeatedly, so ignore the ball for 800 ms after one fires.
 
     zip_gestures: zip_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
         layer-id = <5>;
         positions = <34 33 32 35>;
+        cooldown-ms = <800>;
     };
 
     combos {
