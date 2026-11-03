@@ -4,7 +4,8 @@
  *
  * Ported from pite1222/zmk (release/conductor-1.0.4,
  * app/src/pointing/input_processor_gestures.c) without the per-endpoint
- * override, which needs Conductor's custom Studio RPC.
+ * override, which needs Conductor's custom Studio RPC. The tap is deferred to
+ * the system work queue (see gestures_tap_work_cb).
  */
 
 #define DT_DRV_COMPAT zmk_input_processor_gestures
@@ -45,6 +46,10 @@ struct gestures_config {
 };
 
 struct gestures_data {
+    const struct device *dev;
+    struct k_work tap_work;
+    int tap_direction;
+    uint8_t tap_input_device_index;
     int32_t x;
     int32_t y;
     int64_t started_at;
@@ -78,7 +83,7 @@ static int gestures_direction(const struct gestures_config *cfg, const struct ge
 
 // The four bindings live on the gesture layer, so they can be edited like normal keys.
 static int gestures_queue_tap(const struct gestures_config *cfg, int direction,
-                              struct zmk_input_processor_state *state) {
+                              uint8_t input_device_index) {
     const struct zmk_behavior_binding *binding =
         zmk_keymap_get_layer_binding_at_idx(cfg->layer_id, cfg->positions[direction]);
     if (binding == NULL) {
@@ -86,8 +91,8 @@ static int gestures_queue_tap(const struct gestures_config *cfg, int direction,
     }
 
     struct zmk_behavior_binding_event event = {
-        .position = ZMK_VIRTUAL_KEY_POSITION_BEHAVIOR_INPUT_PROCESSOR(state->input_device_index,
-                                                                      cfg->index),
+        .position =
+            ZMK_VIRTUAL_KEY_POSITION_BEHAVIOR_INPUT_PROCESSOR(input_device_index, cfg->index),
         .timestamp = k_uptime_get(),
 #if IS_ENABLED(CONFIG_ZMK_SPLIT)
         .source = ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
@@ -100,6 +105,19 @@ static int gestures_queue_tap(const struct gestures_config *cfg, int direction,
     }
 
     return zmk_behavior_queue_add(&event, *binding, false, 0);
+}
+
+// zmk_behavior_queue_add() runs the press right away in the caller's thread. The input
+// thread only has CONFIG_INPUT_THREAD_STACK_SIZE (512 bytes on the central), which the
+// keycode event chain overflows, so the tap runs on the system work queue like key presses.
+static void gestures_tap_work_cb(struct k_work *work) {
+    struct gestures_data *data = CONTAINER_OF(work, struct gestures_data, tap_work);
+    const struct gestures_config *cfg = data->dev->config;
+
+    int ret = gestures_queue_tap(cfg, data->tap_direction, data->tap_input_device_index);
+    if (ret < 0) {
+        LOG_ERR("Failed to queue gesture behavior: %d", ret);
+    }
 }
 
 static int gestures_handle_event(const struct device *dev, struct input_event *event,
@@ -147,14 +165,12 @@ static int gestures_handle_event(const struct device *dev, struct input_event *e
 
     int direction = gestures_direction(cfg, data);
     if (direction >= 0) {
-        int ret = gestures_queue_tap(cfg, direction, state);
+        // The cooldown keeps the next gesture from overwriting these before the work runs.
+        data->tap_direction = direction;
+        data->tap_input_device_index = state->input_device_index;
+        k_work_submit(&data->tap_work);
         gestures_reset(data);
         data->cooldown_until = now + cfg->cooldown_ms;
-
-        if (ret < 0) {
-            LOG_ERR("Failed to queue gesture behavior: %d", ret);
-            return ret;
-        }
     }
 
     return ZMK_INPUT_PROC_STOP;
@@ -164,7 +180,13 @@ static const struct zmk_input_processor_driver_api gestures_driver_api = {
     .handle_event = gestures_handle_event,
 };
 
-static int gestures_init(const struct device *dev) { return 0; }
+static int gestures_init(const struct device *dev) {
+    struct gestures_data *data = dev->data;
+
+    data->dev = dev;
+    k_work_init(&data->tap_work, gestures_tap_work_cb);
+    return 0;
+}
 
 #define GESTURES_INST(n)                                                                           \
     BUILD_ASSERT(DT_INST_PROP_LEN(n, positions) == GESTURE_DIRECTION_COUNT,                        \
