@@ -24,6 +24,13 @@
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
             <&zip_gestures>;
     };
+
+    window {
+        layers = <6>;
+        input-processors =
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_window_gestures>;
+    };
 };
 
 &lt {
@@ -34,14 +41,22 @@
 &mt { flavor = "balanced"; };
 
 / {
-    // Flick the trackball while GESTURE is held to tap one of its bindings.
-    // positions = up, down, left, right on GESTURE (same keys as the NAV arrows).
+    // Flick the trackball while GESTURE (Esc) or WINDOW (A+O) is held to tap one of its bindings.
+    // positions = up, down, left, right on that layer (same keys as the NAV arrows).
     // None of the gestures is used repeatedly, so ignore the ball for 800 ms after one fires.
 
     zip_gestures: zip_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
         layer-id = <5>;
+        positions = <34 33 32 35>;
+        cooldown-ms = <800>;
+    };
+
+    zip_window_gestures: zip_window_gestures {
+        compatible = "zmk,input-processor-gestures";
+        #input-processor-cells = <0>;
+        layer-id = <6>;
         positions = <34 33 32 35>;
         cooldown-ms = <800>;
     };
@@ -56,7 +71,7 @@
         };
 
         eisuu {
-            bindings = <&eisuu_default>;
+            bindings = <&ao_combo 6 0>;
             key-positions = <28 27>;
             layers = <0 1>;
         };
@@ -158,6 +173,17 @@
             compatible = "zmk,behavior-hold-tap";
             label = "TN_COMBO";
             bindings = <&mo>, <&kana_jp>;
+
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <150>;
+            hold-while-undecided;
+        };
+
+        ao_combo: ao_combo {
+            compatible = "zmk,behavior-hold-tap";
+            label = "AO_COMBO";
+            bindings = <&mo>, <&eisuu_default>;
 
             #binding-cells = <2>;
             flavor = "hold-preferred";
@@ -317,6 +343,19 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp F11  &kp LC(DOWN_ARROW)  &kp LC(UP_ARROW)  &kp LG(LC(F))  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans              &trans            &trans         &trans  &trans
+            >;
+        };
+
+        // Hold A+O (tap is eisuu). The K/T/N/S bindings are also the trackball
+        // flick left/down/up/right (read by &zip_window_gestures above).
+
+        WINDOW {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                  &trans                &trans                   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                  &trans                &trans                   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LC(LG(LEFT_ARROW))  &kp LC(LG(DOWN_ARROW))  &kp LC(LG(UP_ARROW))  &kp LC(LG(RIGHT_ARROW))  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                &trans                   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                  &trans                  &trans                &trans                   &trans  &trans
             >;
         };
     };
