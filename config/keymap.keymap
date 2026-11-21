@@ -4,6 +4,10 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+// With any of these held, the JP-layer Q/L keys send plain Q/L (keeping the mods),
+// so shortcuts like Cmd+Q and Cmd+L still work in Japanese mode.
+#define JP_PASS_MODS (MOD_LGUI|MOD_RGUI|MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LSFT|MOD_RSFT)
+
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
@@ -82,19 +86,6 @@
             bindings = <&ao_combo 6 0>;
             key-positions = <28 27>;
             layers = <0 1>;
-        };
-
-        xn {
-            bindings = <&xn_macro>;
-            key-positions = <34 35>;
-            layers = <1>;
-        };
-
-        minus {
-            bindings = <&kp MINUS>;
-            key-positions = <27 26>;
-            timeout-ms = <40>;
-            layers = <1>;
         };
 
         mb1 {
@@ -199,6 +190,29 @@
             hold-while-undecided;
         };
 
+        // JP layer only: Q types "xn" (ん) and L types MINUS (ー).
+        // Romaji input never needs Q, and X covers L's small kana.
+
+        jp_q: jp_q {
+            compatible = "zmk,behavior-mod-morph";
+            label = "JP_Q";
+            bindings = <&xn_macro>, <&kp Q>;
+
+            #binding-cells = <0>;
+            mods = <JP_PASS_MODS>;
+            keep-mods = <JP_PASS_MODS>;
+        };
+
+        jp_l: jp_l {
+            compatible = "zmk,behavior-mod-morph";
+            label = "JP_L";
+            bindings = <&kp MINUS>, <&kp L>;
+
+            #binding-cells = <0>;
+            mods = <JP_PASS_MODS>;
+            keep-mods = <JP_PASS_MODS>;
+        };
+
         my_mt: my_mt {
             compatible = "zmk,behavior-hold-tap";
             label = "MY_MT";
@@ -298,13 +312,13 @@
             >;
         };
 
-        // Keep JP transparent and right above DEFAULT, so combos limited to
-        // DEFAULT/JP stay off while SYMBOL or NAV is held.
+        // Keep JP right above DEFAULT, so combos limited to DEFAULT/JP stay off
+        // while SYMBOL or NAV is held. Only Q (ん) and L (ー) differ from DEFAULT.
 
         JP {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &jp_q   &trans  &trans  &trans  &jp_l                   &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
