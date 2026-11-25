@@ -36,3 +36,12 @@ properties:
     type: phandle-array
     required: true
     description: Behaviors to tap for up, down, left, right (exactly four)
+  ipad-bindings:
+    type: phandle-array
+    specifier-space: binding
+    description: >
+      Behaviors to tap instead of bindings while the keyboard is sending to the
+      BLE profile in ipad-ble-profile (exactly four: up, down, left, right)
+  ipad-ble-profile:
+    type: int
+    description: BLE profile index the iPad is paired on (required with ipad-bindings)

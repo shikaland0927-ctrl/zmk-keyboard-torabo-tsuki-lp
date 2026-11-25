@@ -10,6 +10,10 @@
 // so shortcuts like Cmd+Q and Cmd+L still work in Japanese mode.
 #define JP_PASS_MODS (MOD_LGUI|MOD_RGUI|MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LSFT|MOD_RSFT)
 
+// The BLE profile the iPad is paired on (&bt BT_SEL 1, the D key on SYSTEM).
+// While it is in use, the trackball gestures send iPad shortcuts instead.
+#define IPAD_BLE_PROFILE 1
+
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
@@ -50,27 +54,40 @@
     // Flick the trackball while GESTURE (Esc) or WINDOW (A+O) is held to tap one of these
     // bindings (up, down, left, right). They are only reachable by flicking, not by keys.
     // None of the gestures is used repeatedly, so ignore the ball for 800 ms after one fires.
+    // ipad-bindings replace them on the iPad's profile (USB and other profiles stay Mac).
 
     zip_gestures: zip_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
+        // Mac: Mission Control, Raycast, show desktop, full screen.
         bindings =
             <&kp LC(UP_ARROW)>,
             <&kp LC(LA(LS(LG(R))))>,
             <&kp F11>,
             <&kp LG(LC(F))>;
 
+        // iPad: Home, Spotlight, (left not decided yet, same as Mac), full screen.
+        ipad-bindings =
+            <&globe H>,
+            <&kp LG(SPACE)>,
+            <&kp F11>,
+            <&globe F>;
+
+        ipad-ble-profile = <IPAD_BLE_PROFILE>;
         cooldown-ms = <800>;
     };
 
     zip_window_gestures: zip_window_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
+        // macOS default window shortcuts: Fill, Return to Previous Size, Tile Left Half,
+        // Tile Right Half. The iPad gets the same keys (Windowed Apps on iPadOS 26):
+        // Apple documents the tiling ones there; Fill and Return still need checking.
         bindings =
-            <&kp LC(LG(UP_ARROW))>,
-            <&kp LC(LG(DOWN_ARROW))>,
-            <&kp LC(LG(LEFT_ARROW))>,
-            <&kp LC(LG(RIGHT_ARROW))>;
+            <&globe LC(F)>,
+            <&globe LC(R)>,
+            <&globe LC(LEFT_ARROW)>,
+            <&globe LC(RIGHT_ARROW)>;
 
         cooldown-ms = <800>;
     };
@@ -226,6 +243,20 @@
             hold-while-undecided;
             balanced-key-positions = <56 57 58 59 60>;
         };
+
+        // Hold = Globe (sent as Caps Lock; see &globe), tap = the second param.
+        // No hold-while-undecided: a lone Globe press would fire the host's
+        // "Press Globe key to" action every time the key is tapped.
+
+        globe_mt: globe_mt {
+            compatible = "zmk,behavior-hold-tap";
+            label = "GLOBE_MT";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+        };
     };
 
     macros {
@@ -279,6 +310,24 @@
             label = "EISUU_DEFAULT";
         };
 
+        // Tap the param with Globe held. Keyboards can't send Apple's real Globe key,
+        // so this sends Caps Lock, and the Mac and the iPad each remap Caps Lock to
+        // Globe for this keyboard (Modifier Keys settings).
+
+        globe: globe {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings =
+                <&macro_press>,
+                <&kp CAPS>,
+                <&macro_tap>,
+                <&macro_param_1to1 &kp MACRO_PLACEHOLDER>,
+                <&macro_release>,
+                <&kp CAPS>;
+
+            label = "GLOBE";
+        };
+
         xn_macro: xn_macro {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -310,7 +359,7 @@
 &trans  &kp Q                          &kp Y                              &kp U          &kp J         &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                         &trans
 &trans  &kp E                          &kp I                              &kp A          &kp O         &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                         &trans
 &trans  &my_mt LEFT_SHIFT COLON        &mt LEFT_GUI PERIOD                &kp C          &kp V         &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &mt RIGHT_GUI COMMA              &my_mt RIGHT_SHIFT SEMICOLON  &trans
-&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp LG(LC(Q))  &lt 5 ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP     &trans
+&trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &globe_mt CAPS LG(LC(Q))  &lt 5 ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP     &trans
             >;
         };
 

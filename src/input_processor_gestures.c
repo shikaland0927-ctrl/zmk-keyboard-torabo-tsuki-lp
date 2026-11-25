@@ -7,7 +7,8 @@
  * override, which needs Conductor's custom Studio RPC. The tap is deferred to
  * the system work queue (see gestures_tap_work_cb), and the four bindings are
  * a property of the processor instead of keys on the gesture layer, so they
- * are only reachable by flicking the ball.
+ * are only reachable by flicking the ball. An optional second set,
+ * ipad-bindings, replaces them while the iPad's BLE profile is in use.
  */
 
 #define DT_DRV_COMPAT zmk_input_processor_gestures
@@ -23,6 +24,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk/behavior.h>
 #include <zmk/behavior_queue.h>
+#include <zmk/endpoints.h>
 #include <zmk/keymap.h>
 #include <zmk/virtual_key_position.h>
 
@@ -45,6 +47,9 @@ struct gestures_config {
     uint16_t tap_ms;
     // up, down, left, right
     const struct zmk_behavior_binding *bindings;
+    // Same order; NULL when the node has no ipad-bindings.
+    const struct zmk_behavior_binding *ipad_bindings;
+    int ipad_ble_profile;
 };
 
 struct gestures_data {
@@ -83,9 +88,26 @@ static int gestures_direction(const struct gestures_config *cfg, const struct ge
     return data->x < 0 ? GESTURE_LEFT : GESTURE_RIGHT;
 }
 
+// macOS and iPadOS use different shortcuts for the same action, so the iPad's BLE
+// profile gets its own bindings. USB and every other profile keep the Mac ones.
+static const struct zmk_behavior_binding *gestures_host_bindings(const struct gestures_config *cfg) {
+#if IS_ENABLED(CONFIG_ZMK_BLE)
+    if (cfg->ipad_bindings != NULL) {
+        struct zmk_endpoint_instance endpoint = zmk_endpoints_selected();
+
+        if (endpoint.transport == ZMK_TRANSPORT_BLE &&
+            endpoint.ble.profile_index == cfg->ipad_ble_profile) {
+            return cfg->ipad_bindings;
+        }
+    }
+#endif
+
+    return cfg->bindings;
+}
+
 static int gestures_queue_tap(const struct gestures_config *cfg, int direction,
                               uint8_t input_device_index) {
-    const struct zmk_behavior_binding *binding = &cfg->bindings[direction];
+    const struct zmk_behavior_binding *binding = &gestures_host_bindings(cfg)[direction];
 
     struct zmk_behavior_binding_event event = {
         .position =
@@ -185,11 +207,30 @@ static int gestures_init(const struct device *dev) {
     return 0;
 }
 
+// ZMK_KEYMAP_EXTRACT_BINDING only reads the property named "bindings".
+#define GESTURES_EXTRACT_IPAD_BINDING(idx, drv_inst)                                               \
+    {                                                                                              \
+        .behavior_dev = DEVICE_DT_NAME(DT_PHANDLE_BY_IDX(drv_inst, ipad_bindings, idx)),           \
+        .param1 = COND_CODE_0(DT_PHA_HAS_CELL_AT_IDX(drv_inst, ipad_bindings, idx, param1), (0),   \
+                              (DT_PHA_BY_IDX(drv_inst, ipad_bindings, idx, param1))),              \
+        .param2 = COND_CODE_0(DT_PHA_HAS_CELL_AT_IDX(drv_inst, ipad_bindings, idx, param2), (0),   \
+                              (DT_PHA_BY_IDX(drv_inst, ipad_bindings, idx, param2))),              \
+    }
+
+#define GESTURES_IPAD_BINDINGS(n)                                                                  \
+    static const struct zmk_behavior_binding gestures_ipad_bindings_##n[] = {LISTIFY(              \
+        DT_INST_PROP_LEN(n, ipad_bindings), GESTURES_EXTRACT_IPAD_BINDING, (, ), DT_DRV_INST(n))}; \
+    BUILD_ASSERT(ARRAY_SIZE(gestures_ipad_bindings_##n) == GESTURE_DIRECTION_COUNT,                \
+                 "ipad-bindings needs exactly four bindings: up, down, left, right");              \
+    BUILD_ASSERT(DT_INST_NODE_HAS_PROP(n, ipad_ble_profile),                                       \
+                 "ipad-bindings needs ipad-ble-profile");
+
 #define GESTURES_INST(n)                                                                           \
     static const struct zmk_behavior_binding gestures_bindings_##n[] = {                           \
         LISTIFY(DT_INST_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), DT_DRV_INST(n))}; \
     BUILD_ASSERT(ARRAY_SIZE(gestures_bindings_##n) == GESTURE_DIRECTION_COUNT,                     \
                  "Gesture processors need exactly four bindings: up, down, left, right");          \
+    IF_ENABLED(DT_INST_NODE_HAS_PROP(n, ipad_bindings), (GESTURES_IPAD_BINDINGS(n)))               \
     static struct gestures_data gestures_data_##n = {};                                            \
     static const struct gestures_config gestures_config_##n = {                                    \
         .index = n,                                                                                \
@@ -201,6 +242,9 @@ static int gestures_init(const struct device *dev) {
         .cooldown_ms = DT_INST_PROP_OR(n, cooldown_ms, 220),                                       \
         .tap_ms = DT_INST_PROP_OR(n, tap_ms, 30),                                                  \
         .bindings = gestures_bindings_##n,                                                         \
+        .ipad_bindings = COND_CODE_1(DT_INST_NODE_HAS_PROP(n, ipad_bindings),                      \
+                                     (gestures_ipad_bindings_##n), (NULL)),                        \
+        .ipad_ble_profile = DT_INST_PROP_OR(n, ipad_ble_profile, -1),                              \
     };                                                                                             \
     DEVICE_DT_INST_DEFINE(n, gestures_init, NULL, &gestures_data_##n, &gestures_config_##n,        \
                           POST_KERNEL, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,                        \
