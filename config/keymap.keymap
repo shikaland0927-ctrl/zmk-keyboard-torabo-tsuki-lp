@@ -56,7 +56,7 @@
         #input-processor-cells = <0>;
         bindings =
             <&kp LC(UP_ARROW)>,
-            <&kp LC(DOWN_ARROW)>,
+            <&kp LC(LA(LS(LG(R))))>,
             <&kp F11>,
             <&kp LG(LC(F))>;
 
