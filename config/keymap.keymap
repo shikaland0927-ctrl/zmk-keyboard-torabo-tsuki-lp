@@ -3,6 +3,8 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
 
 // With any of these held, the JP-layer Q/L keys send plain Q/L (keeping the mods),
 // so shortcuts like Cmd+Q and Cmd+L still work in Japanese mode.
@@ -331,7 +333,7 @@
 &trans  &kp EXCLAMATION       &kp QUESTION          &kp AMPERSAND         &kp PIPE          &kp TILDE                    &trans     &kp LEFT_BRACE        &kp SQT            &kp RIGHT_BRACE        &kp BACKSLASH  &trans
 &trans  &kp PLUS              &kp MINUS             &kp ASTERISK          &kp SLASH         &kp PERCENT  &trans  &trans  &trans     &kp LEFT_PARENTHESIS  &kp DOUBLE_QUOTES  &kp RIGHT_PARENTHESIS  &kp HASH       &trans
 &trans  &kp CARET             &kp LESS_THAN         &kp EQUAL             &kp GREATER_THAN  &kp DOLLAR   &trans  &trans  &kp GRAVE  &kp LEFT_BRACKET      &kp UNDERSCORE     &kp RIGHT_BRACKET      &kp AT         &trans
-&trans  &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans            &trans       &trans  &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
+&trans  &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans            &trans       &mo 7   &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
             >;
         };
 
@@ -376,6 +378,20 @@
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        // Hold Enter (SYMBOL), then hold Tab to reach SYSTEM. Right hand:
+        // top row = BLE profiles 0-4, home row = output to USB / BLE,
+        // bottom row pinky side = clear this profile's pairing / clear all pairings.
+
+        SYSTEM {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans          &trans          &trans          &trans          &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &out OUT_USB    &out OUT_BLE    &trans          &trans          &trans          &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans          &trans          &bt BT_CLR      &bt BT_CLR_ALL  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans          &trans          &trans          &trans          &trans
             >;
         };
     };
