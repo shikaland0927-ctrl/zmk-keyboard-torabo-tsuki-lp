@@ -14,6 +14,10 @@
 // While it is in use, the trackball gestures send iPad shortcuts instead.
 #define IPAD_BLE_PROFILE 1
 
+// The key left of Esc sends Caps Lock, which the Mac and the iPad remap to Globe
+// (Modifier Keys settings), so a tap opens the emoji picker. macOS drops a remapped
+// Globe from key combos (Globe+Ctrl+F arrives as Ctrl+F), so no shortcut uses Globe.
+
 &pointing_listener {
     input-processors =
         <&zip_xy_scaler 2 3>,
@@ -66,12 +70,12 @@
             <&kp F11>,
             <&kp LG(LC(F))>;
 
-        // iPad: Home, Spotlight, (left not decided yet, same as Mac), full screen.
+        // iPad: Home, Spotlight; left and right are not decided yet (same as Mac).
         ipad-bindings =
-            <&globe H>,
+            <&kp LG(H)>,
             <&kp LG(SPACE)>,
             <&kp F11>,
-            <&globe F>;
+            <&kp LG(LC(F))>;
 
         ipad-ble-profile = <IPAD_BLE_PROFILE>;
         cooldown-ms = <800>;
@@ -80,14 +84,11 @@
     zip_window_gestures: zip_window_gestures {
         compatible = "zmk,input-processor-gestures";
         #input-processor-cells = <0>;
-        // macOS default window shortcuts: Fill, Return to Previous Size, Tile Left Half,
-        // Tile Right Half. The iPad gets the same keys (Windowed Apps on iPadOS 26):
-        // Apple documents the tiling ones there; Fill and Return still need checking.
         bindings =
-            <&globe LC(F)>,
-            <&globe LC(R)>,
-            <&globe LC(LEFT_ARROW)>,
-            <&globe LC(RIGHT_ARROW)>;
+            <&kp LC(LG(UP_ARROW))>,
+            <&kp LC(LG(DOWN_ARROW))>,
+            <&kp LC(LG(LEFT_ARROW))>,
+            <&kp LC(LG(RIGHT_ARROW))>;
 
         cooldown-ms = <800>;
     };
@@ -294,24 +295,6 @@
             bindings = <&macro_press>, <&tog_off 1>, <&macro_tap>, <&kp LANG2>;
 
             label = "EISUU_DEFAULT";
-        };
-
-        // Tap the param with Globe held. Keyboards can't send Apple's real Globe key,
-        // so this sends Caps Lock, and the Mac and the iPad each remap Caps Lock to
-        // Globe for this keyboard (Modifier Keys settings).
-
-        globe: globe {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings =
-                <&macro_press>,
-                <&kp CAPS>,
-                <&macro_tap>,
-                <&macro_param_1to1 &kp MACRO_PLACEHOLDER>,
-                <&macro_release>,
-                <&kp CAPS>;
-
-            label = "GLOBE";
         };
 
         xn_macro: xn_macro {
