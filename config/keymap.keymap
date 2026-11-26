@@ -125,6 +125,20 @@
             timeout-ms = <80>;
             key-positions = <34 20>;
         };
+
+        // Tap both brightness keys to lock the screen; hold both for Ctrl+Alt as before.
+        lock_screen {
+            bindings = <&pair_mt LC(LEFT_ALT) LG(LC(Q))>;
+            key-positions = <53 54>;
+            layers = <0 1>;
+        };
+
+        // Tap both volume keys to mute; hold both for Ctrl+Alt as before.
+        mute {
+            bindings = <&pair_mt RC(RIGHT_ALT) C_MUTE>;
+            key-positions = <63 64>;
+            layers = <0 1>;
+        };
     };
 
     behaviors {
@@ -244,6 +258,19 @@
             tapping-term-ms = <200>;
             hold-while-undecided;
             balanced-key-positions = <56 57 58 59 60>;
+        };
+
+        // Binding for combos on two mod-tap keys: a quick tap sends the shortcut,
+        // while holding them (or pressing any other key) keeps both mods.
+        // hold-preferred, so an unclear press never fires the tap.
+        pair_mt: pair_mt {
+            compatible = "zmk,behavior-hold-tap";
+            label = "PAIR_MT";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
         };
     };
 
