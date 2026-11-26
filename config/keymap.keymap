@@ -70,11 +70,12 @@
             <&kp F11>,
             <&kp LG(LC(F))>;
 
-        // iPad: Home, Spotlight; left and right are not decided yet (same as Mac).
+        // iPad: App Switcher (mouse button 4, which the iPad's AssistiveTouch maps to
+        // App Switcher), Spotlight, Home; right is not decided yet (same as Mac).
         ipad-bindings =
-            <&kp LG(H)>,
+            <&mkp MB4>,
             <&kp LG(SPACE)>,
-            <&kp F11>,
+            <&kp LG(H)>,
             <&kp LG(LC(F))>;
 
         ipad-ble-profile = <IPAD_BLE_PROFILE>;
@@ -90,6 +91,14 @@
             <&kp LC(LG(LEFT_ARROW))>,
             <&kp LC(LG(RIGHT_ARROW))>;
 
+        // iPad: off (the iPad runs Full Screen Apps, so there are no windows to tile).
+        ipad-bindings =
+            <&none>,
+            <&none>,
+            <&none>,
+            <&none>;
+
+        ipad-ble-profile = <IPAD_BLE_PROFILE>;
         cooldown-ms = <800>;
     };
 
@@ -137,6 +146,13 @@
         mute {
             bindings = <&pair_mt RC(RIGHT_ALT) C_MUTE>;
             key-positions = <63 64>;
+            layers = <0 1>;
+        };
+
+        // Hold Enter and Tab together for SYSTEM (BLE profiles and output).
+        system_layer {
+            bindings = <&mo 7>;
+            key-positions = <57 58>;
             layers = <0 1>;
         };
     };
@@ -379,7 +395,7 @@
 &trans  &kp EXCLAMATION       &kp QUESTION          &kp AMPERSAND         &kp PIPE          &kp TILDE                    &trans     &kp LEFT_BRACE        &kp SQT            &kp RIGHT_BRACE        &kp BACKSLASH  &trans
 &trans  &kp PLUS              &kp MINUS             &kp ASTERISK          &kp SLASH         &kp PERCENT  &trans  &trans  &trans     &kp LEFT_PARENTHESIS  &kp DOUBLE_QUOTES  &kp RIGHT_PARENTHESIS  &kp HASH       &trans
 &trans  &kp CARET             &kp LESS_THAN         &kp EQUAL             &kp GREATER_THAN  &kp DOLLAR   &trans  &trans  &kp GRAVE  &kp LEFT_BRACKET      &kp UNDERSCORE     &kp RIGHT_BRACKET      &kp AT         &trans
-&trans  &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans            &trans       &mo 7   &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
+&trans  &kp LG(LS(NUMBER_3))  &kp LG(LS(NUMBER_4))  &kp LG(LS(NUMBER_5))  &trans            &trans       &trans  &trans  &trans     &trans                &trans             &icloud                &eccs          &trans
             >;
         };
 
@@ -427,7 +443,7 @@
             >;
         };
 
-        // Hold Enter (SYMBOL), then hold Tab to reach SYSTEM. Right hand:
+        // Hold Enter and Tab together (combo system_layer) to reach SYSTEM. Right hand:
         // top row = BLE profiles 0-4, home row = output to USB / BLE,
         // bottom row pinky side = clear this profile's pairing / clear all pairings.
 
