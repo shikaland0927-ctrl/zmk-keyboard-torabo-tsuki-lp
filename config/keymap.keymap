@@ -71,12 +71,12 @@
             <&kp LG(LC(F))>;
 
         // iPad: App Switcher (mouse button 4, which the iPad's AssistiveTouch maps to
-        // App Switcher), Spotlight, Home; right is not decided yet (same as Mac).
+        // App Switcher), Spotlight, Home, nothing (Full Screen Apps has no full-screen toggle).
         ipad-bindings =
             <&mkp MB4>,
             <&kp LG(SPACE)>,
             <&kp LG(H)>,
-            <&kp LG(LC(F))>;
+            <&none>;
 
         ipad-ble-profile = <IPAD_BLE_PROFILE>;
         cooldown-ms = <800>;
