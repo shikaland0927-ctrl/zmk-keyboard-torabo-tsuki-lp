@@ -70,13 +70,14 @@
             <&kp F11>,
             <&kp LG(LC(F))>;
 
-        // iPad: mouse button 4 (App Switcher), Spotlight, Home, mouse button 5. The iPad's
-        // AssistiveTouch decides what buttons 4 and 5 do (Customize Additional Buttons).
+        // iPad: mouse button 4 (App Switcher), Spotlight, Home, nothing. The iPad's
+        // AssistiveTouch decides what button 4 does (Customize Additional Buttons);
+        // button 5 is Lock Screen there, sent by &lock_host instead.
         ipad-bindings =
             <&mkp MB4>,
             <&kp LG(SPACE)>,
             <&kp LG(H)>,
-            <&mkp MB5>;
+            <&none>;
 
         ipad-ble-profile = <IPAD_BLE_PROFILE>;
         cooldown-ms = <800>;
@@ -277,12 +278,13 @@
             balanced-key-positions = <56 57 58 59 60>;
         };
 
-        // Lock the screen: Cmd+Ctrl+Q on the Mac, the Power key on the iPad's profile.
+        // Lock the screen: Cmd+Ctrl+Q on the Mac; on the iPad's profile mouse button 5,
+        // which the iPad's AssistiveTouch maps to Lock Screen (the Power key doesn't lock it).
         lock_host: lock_host {
             compatible = "zmk,behavior-ipad-morph";
             label = "LOCK_HOST";
             #binding-cells = <0>;
-            bindings = <&kp LG(LC(Q))>, <&kp C_POWER>;
+            bindings = <&kp LG(LC(Q))>, <&mkp MB5>;
             ipad-ble-profile = <IPAD_BLE_PROFILE>;
         };
 
