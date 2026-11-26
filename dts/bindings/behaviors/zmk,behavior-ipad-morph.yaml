@@ -1,0 +1,21 @@
+# Copyright (c) 2026 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: >
+  Invokes one of two bindings depending on the host. The second binding is used
+  while the keyboard is sending to the BLE profile in ipad-ble-profile, the
+  first one everywhere else (USB and every other BLE profile).
+
+compatible: "zmk,behavior-ipad-morph"
+
+include: zero_param.yaml
+
+properties:
+  bindings:
+    type: phandle-array
+    required: true
+    description: Exactly two bindings, Mac first and iPad second
+  ipad-ble-profile:
+    type: int
+    required: true
+    description: BLE profile index the iPad is paired on

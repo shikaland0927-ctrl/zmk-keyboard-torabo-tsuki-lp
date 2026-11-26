@@ -135,9 +135,10 @@
             key-positions = <34 20>;
         };
 
-        // Tap both brightness keys to lock the screen; hold both for Ctrl+Alt as before.
+        // Tap both brightness keys to lock the screen (Mac and iPad, see &lock_host);
+        // hold both for Ctrl+Alt as before.
         lock_screen {
-            bindings = <&pair_mt LC(LEFT_ALT) LG(LC(Q))>;
+            bindings = <&pair_mt_lock LC(LEFT_ALT) 0>;
             key-positions = <53 54>;
             layers = <0 1>;
         };
@@ -274,6 +275,26 @@
             tapping-term-ms = <200>;
             hold-while-undecided;
             balanced-key-positions = <56 57 58 59 60>;
+        };
+
+        // Lock the screen: Cmd+Ctrl+Q on the Mac, the Power key on the iPad's profile.
+        lock_host: lock_host {
+            compatible = "zmk,behavior-ipad-morph";
+            label = "LOCK_HOST";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LC(Q))>, <&kp C_POWER>;
+            ipad-ble-profile = <IPAD_BLE_PROFILE>;
+        };
+
+        // pair_mt with &lock_host as the tap, for the lock_screen combo.
+        pair_mt_lock: pair_mt_lock {
+            compatible = "zmk,behavior-hold-tap";
+            label = "PAIR_MT_LOCK";
+            bindings = <&kp>, <&lock_host>;
+
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
         };
 
         // Binding for combos on two mod-tap keys: a quick tap sends the shortcut,

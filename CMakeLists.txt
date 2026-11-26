@@ -9,4 +9,8 @@ if(CONFIG_SHIELD_TORABO_TSUKI_LP_LEFT OR CONFIG_SHIELD_TORABO_TSUKI_LP_RIGHT)
     CONFIG_ZMK_INPUT_PROCESSOR_GESTURES
     src/input_processor_gestures.c
   )
+  zephyr_library_sources_ifdef(
+    CONFIG_ZMK_BEHAVIOR_IPAD_MORPH
+    src/behavior_ipad_morph.c
+  )
 endif()
