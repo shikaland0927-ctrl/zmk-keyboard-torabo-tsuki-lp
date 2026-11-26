@@ -242,14 +242,14 @@
             hold-while-undecided;
         };
 
-        // JP layer only: V types "xn" (ん) and X types MINUS (ー).
-        // Romaji input only loses ヴ (vu), and L covers X's small kana (la, ltu, lya).
+        // JP layer only: C types "xn" (ん) and X types MINUS (ー).
+        // Romaji input loses C (type ti/tya for ち/ちゃ), and L covers X's small kana (la, ltu, lya).
         // L stays plain so zh/zj/zk/zl still type the arrows.
 
-        jp_v: jp_v {
+        jp_c: jp_c {
             compatible = "zmk,behavior-mod-morph";
-            label = "JP_V";
-            bindings = <&xn_macro>, <&kp V>;
+            label = "JP_C";
+            bindings = <&xn_macro>, <&kp C>;
 
             #binding-cells = <0>;
             mods = <JP_PASS_MODS>;
@@ -400,14 +400,14 @@
         };
 
         // Keep JP right above DEFAULT, so combos limited to DEFAULT/JP stay off
-        // while SYMBOL or NAV is held. Only V (ん) and X (ー) differ from DEFAULT.
+        // while SYMBOL or NAV is held. Only C (ん) and X (ー) differ from DEFAULT.
 
         JP {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &jp_v   &trans  &jp_x   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &jp_c   &jp_x   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
