@@ -210,23 +210,24 @@
             hold-while-undecided;
         };
 
-        // JP layer only: Q types "xn" (ん) and L types MINUS (ー).
-        // Romaji input never needs Q, and X covers L's small kana.
+        // JP layer only: V types "xn" (ん) and X types MINUS (ー).
+        // Romaji input only loses ヴ (vu), and L covers X's small kana (la, ltu, lya).
+        // L stays plain so zh/zj/zk/zl still type the arrows.
 
-        jp_q: jp_q {
+        jp_v: jp_v {
             compatible = "zmk,behavior-mod-morph";
-            label = "JP_Q";
-            bindings = <&xn_macro>, <&kp Q>;
+            label = "JP_V";
+            bindings = <&xn_macro>, <&kp V>;
 
             #binding-cells = <0>;
             mods = <JP_PASS_MODS>;
             keep-mods = <JP_PASS_MODS>;
         };
 
-        jp_l: jp_l {
+        jp_x: jp_x {
             compatible = "zmk,behavior-mod-morph";
-            label = "JP_L";
-            bindings = <&kp MINUS>, <&kp L>;
+            label = "JP_X";
+            bindings = <&kp MINUS>, <&kp X>;
 
             #binding-cells = <0>;
             mods = <JP_PASS_MODS>;
@@ -333,14 +334,14 @@
         };
 
         // Keep JP right above DEFAULT, so combos limited to DEFAULT/JP stay off
-        // while SYMBOL or NAV is held. Only Q (ん) and L (ー) differ from DEFAULT.
+        // while SYMBOL or NAV is held. Only V (ん) and X (ー) differ from DEFAULT.
 
         JP {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &jp_q   &trans  &trans  &trans  &jp_l                   &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &jp_v   &jp_x   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
