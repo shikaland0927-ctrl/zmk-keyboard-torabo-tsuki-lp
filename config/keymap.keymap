@@ -394,7 +394,7 @@
 &trans  &trans                         &trans                             &trans         &trans        &trans                                                    &trans              &trans  &trans  &trans                           &trans                        &trans
 &trans  &kp Q                          &kp Y                              &kp U          &kp J         &kp L                                                     &kp G               &kp D   &kp M   &kp Z                            &kp B                         &trans
 &trans  &kp E                          &kp I                              &kp A          &kp O         &kp F        &trans                        &trans         &kp K               &kp T   &kp N   &kp S                            &kp H                         &trans
-&trans  &my_mt LEFT_SHIFT COLON        &mt LEFT_GUI PERIOD                &kp C          &kp V         &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &mt RIGHT_GUI COMMA              &my_mt RIGHT_SHIFT SEMICOLON  &trans
+&trans  &my_mt LEFT_SHIFT COLON        &mt LEFT_GUI PERIOD                &kp V          &kp C         &kp X        &trans                        &trans         &kp P               &kp W   &kp R   &mt RIGHT_GUI COMMA              &my_mt RIGHT_SHIFT SEMICOLON  &trans
 &trans  &mt LEFT_ALT C_BRIGHTNESS_DEC  &mt LEFT_CONTROL C_BRIGHTNESS_INC  &kp CAPS  &lt 5 ESCAPE  &lt 2 ENTER  &mt LC(LA(LS(LEFT_GUI))) TAB  &kp BACKSPACE  &lt_to_nav 0 SPACE  &trans  &trans  &mt RIGHT_CONTROL C_VOLUME_DOWN  &mt RIGHT_ALT C_VOLUME_UP     &trans
             >;
         };
@@ -407,7 +407,7 @@
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &jp_v   &jp_x   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &jp_v   &trans  &jp_x   &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
